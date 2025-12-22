@@ -1,0 +1,787 @@
+{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.image_height == 'adapt' and section.settings.image != blank -%}
+  {%- style -%}
+    @media screen and (max-width: 749px) {
+      #Banner-{{ section.id }}::before,
+      #Banner-{{ section.id }} .banner__media::before,
+      #Banner-{{ section.id }}:not(.banner--mobile-bottom) .banner__content::before {
+        padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;
+        content: '';
+        display: block;
+      }
+    }
+
+    @media screen and (min-width: 750px) {
+      #Banner-{{ section.id }}::before,
+      #Banner-{{ section.id }} .banner__media::before {
+        padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;
+        content: '';
+        display: block;
+      }
+    }
+  {%- endstyle -%}
+{%- endif -%}
+
+{%- style -%}
+  #Banner-{{ section.id }}::after {
+    opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
+  }
+
+  #Banner-{{ section.id }} .banner__filters {
+    margin-top: 2rem;
+  }
+
+  #Banner-{{ section.id }} .filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  #Banner-{{ section.id }} .filter-item {
+    display: flex;
+    flex-direction: column;
+    min-width: 140px;
+  }
+
+  #Banner-{{ section.id }} .filter-label {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: inherit;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  #Banner-{{ section.id }} .filter-select {
+    padding: 0.75rem 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: inherit;
+    font-size: 1.3rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+  }
+
+  #Banner-{{ section.id }} .filter-select:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+    background: #d0d0d0;
+    transform: translateY(-1px);
+  }
+
+  #Banner-{{ section.id }} .filter-select:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: #d8d8d8;
+  }
+
+  #Banner-{{ section.id }} .filter-select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f0f0f0;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  #Banner-{{ section.id }} .filter-select:disabled:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: #f0f0f0;
+    transform: none;
+  }
+
+  #Banner-{{ section.id }} .filter-select option {
+    background: #1a1a1a;
+    color: #ffffff;
+    padding: 0.5rem;
+  }
+
+  #Banner-{{ section.id }} .filter-submit {
+    align-self: flex-end;
+  }
+
+  #Banner-{{ section.id }} .filter-button {
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-height: 50px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  #Banner-{{ section.id }} .filter-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  #Banner-{{ section.id }} .filter-button:active {
+    transform: translateY(0);
+  }
+
+  @media screen and (max-width: 749px) {
+    #Banner-{{ section.id }} .filter-controls {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.25rem;
+    }
+
+    #Banner-{{ section.id }} .filter-item {
+      min-width: auto;
+    }
+
+    #Banner-{{ section.id }} .filter-select {
+      padding: 1rem;
+      font-size: 1rem;
+    }
+
+    #Banner-{{ section.id }} .filter-button {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    #Banner-{{ section.id }} .filter-submit {
+      align-self: stretch;
+    }
+  }
+{%- endstyle -%}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('#Banner-{{ section.id }} .product-filter-form');
+    if (!form) return;
+
+    const filter1 = form.querySelector('#filter-1-{{ section.id }}');
+    const filter2 = form.querySelector('#filter-2-{{ section.id }}');
+    const dependentOptions = form.getAttribute('data-dependent-options');
+
+    if (!filter1 || !filter2 || !dependentOptions) return;
+
+    // Parse dependent options from format: "parent1:child1,child2|parent2:child1,child2"
+    const optionsMap = {};
+    const pairs = dependentOptions.split('|');
+
+    pairs.forEach((pair) => {
+      if (pair.includes(':')) {
+        const [parent, children] = pair.split(':');
+        const childOptions = children.split(',').map((child) => child.trim());
+        optionsMap[parent.trim().toLowerCase()] = childOptions;
+      }
+    });
+
+    // Function to update filter 2 based on filter 1 selection
+    function updateFilter2() {
+      const selectedValue = filter1.value.toLowerCase();
+
+      // Clear current options
+      filter2.innerHTML = '';
+
+      if (!selectedValue) {
+        // No selection in filter 1
+        filter2.innerHTML =
+          '<option value="">Select {{ section.settings.filter_1_label | default: "Filter 1" }} first</option>';
+        filter2.disabled = true;
+        return;
+      }
+
+      // Add default "All" option
+      filter2.innerHTML = '<option value="">All {{ section.settings.filter_2_label | default: "Options" }}</option>';
+
+      // Find matching options for selected parent
+      const matchingOptions = optionsMap[selectedValue] || [];
+
+      if (matchingOptions.length > 0) {
+        matchingOptions.forEach((option) => {
+          const optionElement = document.createElement('option');
+          optionElement.value = option.toLowerCase().replace(/\s+/g, '-');
+          optionElement.textContent = option.charAt(0).toUpperCase() + option.slice(1);
+          filter2.appendChild(optionElement);
+        });
+        filter2.disabled = false;
+      } else {
+        filter2.innerHTML += '<option value="">No options available</option>';
+        filter2.disabled = true;
+      }
+    }
+
+    // Listen for changes in filter 1
+    filter1.addEventListener('change', updateFilter2);
+
+    // Initialize filter 2 on page load
+    updateFilter2();
+  });
+</script>
+
+{%- liquid
+  assign full_width = '100vw'
+  assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+
+  if section.settings.image_behavior == 'ambient'
+    assign half_width = '60vw'
+    assign full_width = '120vw'
+    assign stacked_sizes = '(min-width: 750px) 60vw, 120vw'
+    assign widths = '450, 660, 900, 1320, 1800, 2136, 2400, 3600, 7680'
+  elsif section.settings.image_behavior == 'fixed' or section.settings.image_behavior == 'zoom-in'
+    assign half_width = '100vw'
+    assign stacked_sizes = '100vw'
+  else
+    assign half_width = '50vw'
+    assign stacked_sizes = '(min-width: 750px) 50vw, 100vw'
+  endif
+  assign fetch_priority = 'auto'
+  if section.index == 1
+    assign fetch_priority = 'high'
+  endif
+-%}
+
+<div
+  id="Banner-{{ section.id }}"
+  class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+>
+  {%- if section.settings.image != blank -%}
+    <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      {%- liquid
+        assign image_height = section.settings.image.width | divided_by: section.settings.image.aspect_ratio
+        if section.settings.image_2 != blank
+          assign image_class = 'banner__media-image-half'
+        endif
+        if section.settings.image_2 != blank and section.settings.stack_images_on_mobile
+          assign sizes = stacked_sizes
+        elsif section.settings.image_2 != blank
+          assign sizes = half_width
+        else
+          assign sizes = full_width
+        endif
+      -%}
+      {{
+        section.settings.image
+        | image_url: width: 3840
+        | image_tag:
+          width: section.settings.image.width,
+          height: image_height,
+          class: image_class,
+          sizes: sizes,
+          widths: widths,
+          fetchpriority: fetch_priority
+      }}
+    </div>
+  {%- elsif section.settings.image_2 == blank -%}
+    <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    </div>
+  {%- endif -%}
+  {%- if section.settings.image_2 != blank -%}
+    <div class="banner__media media{% if section.settings.image != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      {%- liquid
+        assign image_height_2 = section.settings.image_2.width | divided_by: section.settings.image_2.aspect_ratio
+        if section.settings.image != blank
+          assign image_class_2 = 'banner__media-image-half'
+        endif
+        if section.settings.image != blank and section.settings.stack_images_on_mobile
+          assign sizes = stacked_sizes
+        elsif section.settings.image_2 != blank
+          assign sizes = half_width
+        else
+          assign sizes = full_width
+        endif
+      -%}
+      {{
+        section.settings.image_2
+        | image_url: width: 3840
+        | image_tag:
+          width: section.settings.image_2.width,
+          height: image_height_2,
+          class: image_class_2,
+          sizes: sizes,
+          widths: widths,
+          fetchpriority: fetch_priority
+      }}
+    </div>
+  {%- endif -%}
+  <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'heading' -%}
+            <h2
+              class="banner__heading inline-richtext {{ block.settings.heading_size }}"
+              {{ block.shopify_attributes }}
+            >
+              {{ block.settings.heading }}
+            </h2>
+          {%- when 'text' -%}
+            <div class="banner__text rte {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
+              <p>{{ block.settings.text }}</p>
+            </div>
+          {%- when 'buttons' -%}
+            {%- comment -%} Buttons removed {%- endcomment -%}
+        {%- endcase -%}
+      {%- endfor -%}
+
+      {%- comment -%} Product Filter Form {%- endcomment -%}
+      {%- if section.settings.filter_1_tags != blank
+        or section.settings.filter_2_tags != blank
+        or section.settings.filter_3_tags != blank
+      -%}
+        <div class="banner__filters">
+          <form
+            class="product-filter-form"
+            action="{{ section.settings.filter_results_url | default: '/collections/all' }}"
+            method="get"
+            data-dependent-options="{{ section.settings.filter_2_tags | escape }}"
+          >
+            <div class="filter-controls">
+              {%- if section.settings.filter_1_tags != blank -%}
+                <div class="filter-item">
+                  <label for="filter-1-{{ section.id }}" class="filter-label">
+                    {{ section.settings.filter_1_label | default: 'Filter 1' }}
+                  </label>
+                  <select id="filter-1-{{ section.id }}" name="filter.v.availability" class="filter-select">
+                    <option value="">All {{ section.settings.filter_1_label | default: 'Options' }}</option>
+                    {%- assign filter_1_options = section.settings.filter_1_tags | split: ',' -%}
+                    {%- for option in filter_1_options -%}
+                      {%- assign option_clean = option | strip -%}
+                      <option value="{{ option_clean | handleize }}">{{ option_clean | capitalize }}</option>
+                    {%- endfor -%}
+                  </select>
+                </div>
+              {%- endif -%}
+
+              {%- if section.settings.filter_2_tags != blank -%}
+                <div class="filter-item">
+                  <label for="filter-2-{{ section.id }}" class="filter-label">
+                    {{ section.settings.filter_2_label | default: 'Filter 2' }}
+                  </label>
+                  <select id="filter-2-{{ section.id }}" name="filter.v.price" class="filter-select" disabled>
+                    <option value="">Select {{ section.settings.filter_1_label | default: 'Filter 1' }} first</option>
+                  </select>
+                </div>
+              {%- endif -%}
+
+              {%- if section.settings.filter_3_tags != blank -%}
+                <div class="filter-item">
+                  <label for="filter-3-{{ section.id }}" class="filter-label">
+                    {{ section.settings.filter_3_label | default: 'Filter 3' }}
+                  </label>
+                  <select id="filter-3-{{ section.id }}" name="filter.v.vendor" class="filter-select">
+                    <option value="">All {{ section.settings.filter_3_label | default: 'Options' }}</option>
+                    {%- assign filter_3_options = section.settings.filter_3_tags | split: ',' -%}
+                    {%- for option in filter_3_options -%}
+                      {%- assign option_clean = option | strip -%}
+                      <option value="{{ option_clean | handleize }}">{{ option_clean | capitalize }}</option>
+                    {%- endfor -%}
+                  </select>
+                </div>
+              {%- endif -%}
+
+              <div class="filter-item filter-submit">
+                <button type="submit" class="filter-button button button--primary">Apply Filters</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.image-banner.name",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.image-banner.settings.image.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "t:sections.image-banner.settings.image_2.label"
+    },
+    {
+      "type": "range",
+      "id": "image_overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "t:sections.image-banner.settings.image_overlay_opacity.label",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "image_height",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.image-banner.settings.image_height.options__1.label"
+        },
+        {
+          "value": "small",
+          "label": "t:sections.image-banner.settings.image_height.options__2.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.image-banner.settings.image_height.options__3.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.image-banner.settings.image_height.options__4.label"
+        }
+      ],
+      "default": "medium",
+      "label": "t:sections.image-banner.settings.image_height.label"
+    },
+    {
+      "type": "select",
+      "id": "image_behavior",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.all.animation.image_behavior.options__1.label"
+        },
+        {
+          "value": "ambient",
+          "label": "t:sections.all.animation.image_behavior.options__2.label"
+        },
+        {
+          "value": "fixed",
+          "label": "t:sections.all.animation.image_behavior.options__3.label"
+        },
+        {
+          "value": "zoom-in",
+          "label": "t:sections.all.animation.image_behavior.options__4.label"
+        }
+      ],
+      "default": "none",
+      "label": "t:sections.all.animation.image_behavior.label"
+    },
+    {
+      "type": "header",
+      "content": "Product Filters"
+    },
+    {
+      "type": "text",
+      "id": "filter_1_label",
+      "label": "Filter 1 Label",
+      "default": "Category",
+      "info": "Label for the first filter dropdown"
+    },
+    {
+      "type": "text",
+      "id": "filter_1_tags",
+      "label": "Filter 1 Tags",
+      "placeholder": "new, sale, featured",
+      "info": "Comma-separated list of tags for first filter"
+    },
+    {
+      "type": "text",
+      "id": "filter_2_label",
+      "label": "Filter 2 Label",
+      "default": "Price Range",
+      "info": "Label for the second filter dropdown"
+    },
+    {
+      "type": "textarea",
+      "id": "filter_2_tags",
+      "label": "Filter 2 Dependent Tags",
+      "placeholder": "toyota:camry,corolla,prius|honda:civic,accord,pilot|ford:f150,mustang,explorer",
+      "info": "Format: parent1:child1,child2,child3|parent2:child1,child2|parent3:child1,child2"
+    },
+    {
+      "type": "text",
+      "id": "filter_3_label",
+      "label": "Filter 3 Label",
+      "default": "Brand",
+      "info": "Label for the third filter dropdown"
+    },
+    {
+      "type": "text",
+      "id": "filter_3_tags",
+      "label": "Filter 3 Tags",
+      "placeholder": "nike, adidas, puma",
+      "info": "Comma-separated list of tags for third filter"
+    },
+    {
+      "type": "url",
+      "id": "filter_results_url",
+      "label": "Filter Results Page",
+      "default": "/collections/all",
+      "info": "Page where filtered products will be displayed"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.image-banner.settings.content.content"
+    },
+    {
+      "type": "select",
+      "id": "desktop_content_position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__1.label"
+        },
+        {
+          "value": "top-center",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__2.label"
+        },
+        {
+          "value": "top-right",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__3.label"
+        },
+        {
+          "value": "middle-left",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__4.label"
+        },
+        {
+          "value": "middle-center",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__5.label"
+        },
+        {
+          "value": "middle-right",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__6.label"
+        },
+        {
+          "value": "bottom-left",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__7.label"
+        },
+        {
+          "value": "bottom-center",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__8.label"
+        },
+        {
+          "value": "bottom-right",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__9.label"
+        }
+      ],
+      "default": "middle-center",
+      "label": "t:sections.image-banner.settings.desktop_content_position.label"
+    },
+    {
+      "type": "select",
+      "id": "desktop_content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.image-banner.settings.desktop_content_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.image-banner.settings.desktop_content_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.image-banner.settings.desktop_content_alignment.options__3.label"
+        }
+      ],
+      "default": "center",
+      "label": "t:sections.image-banner.settings.desktop_content_alignment.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_box",
+      "default": true,
+      "label": "t:sections.image-banner.settings.show_text_box.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.image-banner.settings.mobile.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "stack_images_on_mobile",
+      "default": true,
+      "label": "t:sections.image-banner.settings.stack_images_on_mobile.label"
+    },
+    {
+      "type": "select",
+      "id": "mobile_content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.image-banner.settings.mobile_content_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.image-banner.settings.mobile_content_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.image-banner.settings.mobile_content_alignment.options__3.label"
+        }
+      ],
+      "default": "center",
+      "label": "t:sections.image-banner.settings.mobile_content_alignment.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_below",
+      "default": true,
+      "label": "t:sections.image-banner.settings.show_text_below.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "t:sections.image-banner.blocks.heading.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "t:sections.image-banner.blocks.heading.settings.heading.default",
+          "label": "t:sections.image-banner.blocks.heading.settings.heading.label"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "options": [
+            {
+              "value": "h2",
+              "label": "t:sections.all.heading_size.options__1.label"
+            },
+            {
+              "value": "h1",
+              "label": "t:sections.all.heading_size.options__2.label"
+            },
+            {
+              "value": "h0",
+              "label": "t:sections.all.heading_size.options__3.label"
+            },
+            {
+              "value": "hxl",
+              "label": "t:sections.all.heading_size.options__4.label"
+            },
+            {
+              "value": "hxxl",
+              "label": "t:sections.all.heading_size.options__5.label"
+            }
+          ],
+          "default": "h1",
+          "label": "t:sections.all.heading_size.label"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "t:sections.image-banner.blocks.text.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "default": "t:sections.image-banner.blocks.text.settings.text.default",
+          "label": "t:sections.image-banner.blocks.text.settings.text.label"
+        },
+        {
+          "type": "select",
+          "id": "text_style",
+          "options": [
+            {
+              "value": "body",
+              "label": "t:sections.image-banner.blocks.text.settings.text_style.options__1.label"
+            },
+            {
+              "value": "subtitle",
+              "label": "t:sections.image-banner.blocks.text.settings.text_style.options__2.label"
+            },
+            {
+              "value": "caption-with-letter-spacing",
+              "label": "t:sections.image-banner.blocks.text.settings.text_style.options__3.label"
+            }
+          ],
+          "default": "body",
+          "label": "t:sections.image-banner.blocks.text.settings.text_style.label"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "t:sections.image-banner.blocks.buttons.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "t:sections.image-banner.blocks.buttons.settings.header_1.content"
+        },
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "default": "t:sections.image-banner.blocks.buttons.settings.button_label_1.default",
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_label_1.label",
+          "info": "t:sections.image-banner.blocks.buttons.settings.button_label_1.info"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_link_1.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary_1",
+          "default": false,
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_style_secondary_1.label"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.image-banner.blocks.buttons.settings.header_2.content"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "default": "t:sections.image-banner.blocks.buttons.settings.button_label_2.default",
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_label_2.label",
+          "info": "t:sections.image-banner.blocks.buttons.settings.button_label_2.info"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_link_2.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary_2",
+          "default": false,
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_style_secondary_2.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.image-banner.presets.name",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "buttons"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

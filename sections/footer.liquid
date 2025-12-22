@@ -5,6 +5,47 @@
 {{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
 {{ 'component-list-social.css' | asset_url | stylesheet_tag }}
 
+<style>
+  .footer {
+    background-color: black !important;
+    color: white !important;
+  }
+
+  .footer * {
+    color: white !important;
+  }
+
+  .footer a {
+    color: white !important;
+  }
+
+  .footer a:hover {
+    color: #ccc !important;
+  }
+
+  .footer .list-menu__item a {
+    color: white !important;
+  }
+
+  .footer .newsletter__button {
+    background-color: white !important;
+    color: black !important;
+  }
+
+  .footer .newsletter__button:hover {
+    background-color: #ccc !important;
+  }
+
+  .footer .field__input {
+    color: black !important;
+    background-color: white !important;
+  }
+
+  .footer .field__label {
+    color: black !important;
+  }
+</style>
+
 {%- style -%}
   .footer {
     margin-top: {{ section.settings.margin_top | times: 0.75 | round: 0 }}px;
