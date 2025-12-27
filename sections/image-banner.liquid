@@ -3,21 +3,99 @@
 <style>
   #Banner-{{ section.id }} .banner__box {
     background: linear-gradient(360deg, #00000080, #0000000d) !important;
-    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    border: 2px solid rgba(255, 255, 255, 0.7) !important;
     border-radius: 0 !important;
     backdrop-filter: blur(10px) !important;
     padding: 2rem !important;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    max-width: 200px !important;
+    position: absolute !important;
+    {%- case section.settings.second_text_position -%}
+      {%- when 'top-left', 'middle-left', 'bottom-left' -%}
+        /* Second text on left, so put banner box on right */
+        right: 35.2px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+      {%- when 'top-center', 'bottom-center' -%}
+        /* Second text centered vertically, put banner box on left */
+        left: 35.2px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+      {%- when 'middle-center' -%}
+        /* Second text in center, put banner box on left */
+        left: 35.2px !important;
+        top: 25% !important;
+      {%- when 'top-right', 'middle-right', 'bottom-right' -%}
+        /* Second text on right, so put banner box on left */
+        left: 35.2px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+    {%- endcase -%}
   }
-  
+
   #Banner-{{ section.id }} .banner__heading {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+    font-size: 4rem !important;
+    font-weight: bold !important;
   }
-  
+
   #Banner-{{ section.id }} .banner__text {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
   }
-  
+
+  #Banner-{{ section.id }} .banner__content {
+    position: relative;
+  }
+
+  #Banner-{{ section.id }} .banner__second-text {
+    position: absolute;
+    z-index: 10;
+    padding: 1rem;
+    text-align: center;
+    {%- case section.settings.second_text_position -%}
+      {%- when 'top-left' -%}
+        top: 35.2px; left: 35.2px;
+      {%- when 'top-center' -%}
+        top: 35.2px; left: 50%; transform: translateX(-50%);
+      {%- when 'top-right' -%}
+        top: 35.2px; right: 35.2px;
+      {%- when 'middle-left' -%}
+        top: 50%; left: 35.2px; transform: translateY(-50%);
+      {%- when 'middle-center' -%}
+        top: 50%; left: 50%; transform: translate(-50%, -50%);
+      {%- when 'middle-right' -%}
+        top: 50%; right: 35.2px; transform: translateY(-50%);
+      {%- when 'bottom-left' -%}
+        bottom: 35.2px; left: 35.2px;
+      {%- when 'bottom-center' -%}
+        bottom: 35.2px; left: 50%; transform: translateX(-50%);
+      {%- when 'bottom-right' -%}
+        bottom: 35.2px; right: 35.2px;
+    {%- endcase -%}
+  }
+
+  #Banner-{{ section.id }} .banner__second-text h3 {
+    margin: 0 0 1rem 0;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    font-size: 4rem;
+    font-weight: bold;
+  }
+
+  #Banner-{{ section.id }} .banner__second-text .button {
+    background-color: transparent !important;
+  }
+
+  #Banner-{{ section.id }} .button:after {
+    border: 1px solid #9a0f39 !important;
+    box-shadow: 0 0 0 calc(var(--buttons-border-width) + var(--border-offset)) rgba(154, 15, 57, 0.2), 0 0 0 var(--buttons-border-width) rgba(154, 15, 57, 1) !important;
+  }
+
+  #Banner-{{ section.id }} .banner__second-text .button:after {
+    border: 1px solid #ffffff !important;
+    box-shadow: 0 0 0 calc(var(--buttons-border-width) + var(--border-offset)) rgba(255, 255, 255, 0.2), 0 0 0 var(--buttons-border-width) rgba(255, 255, 255, 1) !important;
+  }
+
   @media screen and (max-width: 749px) {
     #Banner-{{ section.id }} .banner__box {
       padding: 1.5rem !important;
@@ -167,7 +245,8 @@
                   {% else %}
                     href="{{ block.settings.button_link_1 }}"
                   {% endif %}
-                  class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}"
+                  class="button button--primary"
+                  style="background-color: #9a0f39; color: #ffffff; border: 1px solid #9a0f39;"
                 >
                   {{- block.settings.button_label_1 | escape -}}
                 </a>
@@ -188,6 +267,22 @@
         {%- endcase -%}
       {%- endfor -%}
     </div>
+
+    {%- if section.settings.second_text_title != blank or section.settings.second_text_button_label != blank -%}
+      <div class="banner__second-text">
+        {%- if section.settings.second_text_title != blank -%}
+          <h3>{{ section.settings.second_text_title | escape }}</h3>
+        {%- endif -%}
+        {%- if section.settings.second_text_button_label != blank -%}
+          <a
+            href="{{ section.settings.second_text_button_link | default: '#' }}"
+            class="button button--primary"
+          >
+            {{ section.settings.second_text_button_label | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -357,7 +452,7 @@
       "id": "stack_images_on_mobile",
       "default": true,
       "label": "t:sections.image-banner.settings.stack_images_on_mobile.label"
-    },    
+    },
     {
       "type": "select",
       "id": "mobile_content_alignment",
@@ -383,6 +478,72 @@
       "id": "show_text_below",
       "default": true,
       "label": "t:sections.image-banner.settings.show_text_below.label"
+    },
+    {
+      "type": "header",
+      "content": "Second Text Section"
+    },
+    {
+      "type": "text",
+      "id": "second_text_title",
+      "label": "Second Text Title",
+      "placeholder": "Enter title for second text section"
+    },
+    {
+      "type": "text",
+      "id": "second_text_button_label",
+      "label": "Second Text Button Label",
+      "placeholder": "Button Text"
+    },
+    {
+      "type": "url",
+      "id": "second_text_button_link",
+      "label": "Second Text Button Link",
+      "info": "Leave blank for no link"
+    },
+    {
+      "type": "select",
+      "id": "second_text_position",
+      "label": "Second Text Position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "Top Left"
+        },
+        {
+          "value": "top-center",
+          "label": "Top Center"
+        },
+        {
+          "value": "top-right",
+          "label": "Top Right"
+        },
+        {
+          "value": "middle-left",
+          "label": "Middle Left"
+        },
+        {
+          "value": "middle-center",
+          "label": "Middle Center"
+        },
+        {
+          "value": "middle-right",
+          "label": "Middle Right"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Bottom Left"
+        },
+        {
+          "value": "bottom-center",
+          "label": "Bottom Center"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bottom Right"
+        }
+      ],
+      "default": "bottom-center"
     }
   ],
   "blocks": [
@@ -466,8 +627,8 @@
       "limit": 1,
       "settings": [
         {
-        "type": "header",
-        "content": "t:sections.image-banner.blocks.buttons.settings.header_1.content"
+          "type": "header",
+          "content": "t:sections.image-banner.blocks.buttons.settings.header_1.content"
         },
         {
           "type": "text",
@@ -488,8 +649,8 @@
           "label": "t:sections.image-banner.blocks.buttons.settings.button_style_secondary_1.label"
         },
         {
-        "type": "header",
-        "content": "t:sections.image-banner.blocks.buttons.settings.header_2.content"
+          "type": "header",
+          "content": "t:sections.image-banner.blocks.buttons.settings.header_2.content"
         },
         {
           "type": "text",

@@ -34,38 +34,42 @@
 
   #Banner-{{ section.id }} .filter-controls {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 1rem;
-    align-items: flex-end;
+    align-items: stretch;
     justify-content: center;
+    width: 100%;
   }
 
   #Banner-{{ section.id }} .filter-item {
     display: flex;
     flex-direction: column;
-    min-width: 140px;
+    width: 100%;
   }
 
   #Banner-{{ section.id }} .filter-label {
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
-    color: inherit;
+    color: white;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    text-align: left;
   }
 
   #Banner-{{ section.id }} .filter-select {
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 2rem;
     border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    color: inherit;
+    border-radius: 0;
+    background: white;
+    color: black;
     font-size: 1.3rem;
     font-weight: 500;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     cursor: pointer;
+    width: 100%;
+    min-height: 50px;
   }
 
   #Banner-{{ section.id }} .filter-select:focus {
@@ -100,13 +104,15 @@
   }
 
   #Banner-{{ section.id }} .filter-submit {
-    align-self: flex-end;
+    align-self: stretch;
   }
 
   #Banner-{{ section.id }} .filter-button {
     padding: 0.75rem 2rem;
     border: none;
     border-radius: 0.5rem;
+    background-color: #9a0f39;
+    color: white;
     font-weight: 700;
     font-size: 1.3rem;
     text-transform: uppercase;
@@ -124,6 +130,93 @@
 
   #Banner-{{ section.id }} .filter-button:active {
     transform: translateY(0);
+  }
+
+  #Banner-{{ section.id }} .banner__content {
+    position: relative;
+  }
+
+  #Banner-{{ section.id }} .banner__box {
+    background: linear-gradient(360deg, #00000080, #0000000d) !important;
+    border: 2px solid rgba(255, 255, 255, 0.7) !important;
+    border-radius: 0 !important;
+    backdrop-filter: blur(10px) !important;
+    padding: 2rem !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    max-width: 200px !important;
+  }
+
+  #Banner-{{ section.id }} .banner__heading {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+    font-size: 4rem !important;
+    font-weight: bold !important;
+    color: white !important;
+  }
+
+  #Banner-{{ section.id }} .banner__text {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+    color: white !important;
+  }
+
+  #Banner-{{ section.id }} .banner__second-text {
+    position: absolute;
+    z-index: 10;
+    padding: 1rem;
+    text-align: center;
+    {%- case section.settings.second_text_position -%}
+      {%- when 'top-left' -%}
+        top: 35.2px; left: 35.2px;
+      {%- when 'top-center' -%}
+        top: 35.2px; left: 50%; transform: translateX(-50%);
+      {%- when 'top-right' -%}
+        top: 35.2px; right: 35.2px;
+      {%- when 'middle-left' -%}
+        top: 50%; left: 35.2px; transform: translateY(-50%);
+      {%- when 'middle-center' -%}
+        top: 50%; left: 50%; transform: translate(-50%, -50%);
+      {%- when 'middle-right' -%}
+        top: 50%; right: 35.2px; transform: translateY(-50%);
+      {%- when 'bottom-left' -%}
+        bottom: 35.2px; left: 35.2px;
+      {%- when 'bottom-center' -%}
+        bottom: 35.2px; left: 50%; transform: translateX(-50%);
+      {%- when 'bottom-right' -%}
+        bottom: 35.2px; right: 35.2px;
+    {%- endcase -%}
+  }
+
+  #Banner-{{ section.id }} .banner__second-text h3 {
+    margin: 0 0 1rem 0;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    font-size: 4rem;
+    font-weight: bold;
+  }
+
+  #Banner-{{ section.id }} .banner__second-text p {
+    margin: 0 0 1rem 0;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    font-size: 1.5rem;
+    line-height: 1.4;
+  }
+
+  #Banner-{{ section.id }} .banner__second-text .button {
+    background-color: transparent !important;
+  }
+
+  #Banner-{{ section.id }} .banner__box .button {
+    margin-top: 8px;
+  }
+
+  #Banner-{{ section.id }} .button:after {
+    border: 1px solid #9a0f39 !important;
+    box-shadow: 0 0 0 calc(var(--buttons-border-width) + var(--border-offset)) rgba(154, 15, 57, 0.2), 0 0 0 var(--buttons-border-width) rgba(154, 15, 57, 1) !important;
+  }
+
+  #Banner-{{ section.id }} .banner__second-text .button:after {
+    border: 1px solid #ffffff !important;
+    box-shadow: 0 0 0 calc(var(--buttons-border-width) + var(--border-offset)) rgba(255, 255, 255, 0.2), 0 0 0 var(--buttons-border-width) rgba(255, 255, 255, 1) !important;
   }
 
   @media screen and (max-width: 749px) {
@@ -390,6 +483,28 @@
         </div>
       {%- endif -%}
     </div>
+
+    {%- if section.settings.second_text_title != blank
+      or section.settings.second_text_subtitle != blank
+      or section.settings.second_text_button_label != blank
+    -%}
+      <div class="banner__second-text">
+        {%- if section.settings.second_text_title != blank -%}
+          <h3>{{ section.settings.second_text_title | escape }}</h3>
+        {%- endif -%}
+        {%- if section.settings.second_text_subtitle != blank -%}
+          <p>{{ section.settings.second_text_subtitle | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.second_text_button_label != blank -%}
+          <a
+            href="{{ section.settings.second_text_button_link | default: '#' }}"
+            class="button button--primary"
+          >
+            {{ section.settings.second_text_button_label | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -638,6 +753,78 @@
       "id": "show_text_below",
       "default": true,
       "label": "t:sections.image-banner.settings.show_text_below.label"
+    },
+    {
+      "type": "header",
+      "content": "Second Text Section"
+    },
+    {
+      "type": "text",
+      "id": "second_text_title",
+      "label": "Second Text Title",
+      "placeholder": "Enter title for second text section"
+    },
+    {
+      "type": "textarea",
+      "id": "second_text_subtitle",
+      "label": "Second Text Subtitle",
+      "placeholder": "Enter subtitle text for second text section"
+    },
+    {
+      "type": "text",
+      "id": "second_text_button_label",
+      "label": "Second Text Button Label",
+      "placeholder": "Button Text"
+    },
+    {
+      "type": "url",
+      "id": "second_text_button_link",
+      "label": "Second Text Button Link",
+      "info": "Leave blank for no link"
+    },
+    {
+      "type": "select",
+      "id": "second_text_position",
+      "label": "Second Text Position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "Top Left"
+        },
+        {
+          "value": "top-center",
+          "label": "Top Center"
+        },
+        {
+          "value": "top-right",
+          "label": "Top Right"
+        },
+        {
+          "value": "middle-left",
+          "label": "Middle Left"
+        },
+        {
+          "value": "middle-center",
+          "label": "Middle Center"
+        },
+        {
+          "value": "middle-right",
+          "label": "Middle Right"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Bottom Left"
+        },
+        {
+          "value": "bottom-center",
+          "label": "Bottom Center"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bottom Right"
+        }
+      ],
+      "default": "bottom-center"
     }
   ],
   "blocks": [
