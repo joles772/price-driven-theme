@@ -13,6 +13,61 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  .multicolumn-{{ section.id }} .step-indicator {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+    gap: var(--grid-desktop-horizontal-spacing);
+    margin-bottom: 2rem;
+    position: relative;
+    align-items: center;
+  }
+
+  .multicolumn-{{ section.id }} .step-indicator::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: calc(50% / {{ section.settings.columns_desktop }});
+    right: calc(50% / {{ section.settings.columns_desktop }});
+    height: 2px;
+    background-color: #e5e5e5;
+    z-index: 1;
+  }
+
+  .multicolumn-{{ section.id }} .step-number {
+    background-color: #9a0f39;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    position: relative;
+    z-index: 2;
+    margin: 0 auto;
+  }
+
+  @media screen and (max-width: 749px) {
+    .multicolumn-{{ section.id }} .step-indicator {
+      grid-template-columns: repeat({{ section.settings.columns_mobile }}, 1fr);
+      gap: var(--grid-mobile-horizontal-spacing);
+      margin-bottom: 1.5rem;
+    }
+    
+    .multicolumn-{{ section.id }} .step-number {
+      width: 32px;
+      height: 32px;
+      font-size: 1rem;
+    }
+
+    .multicolumn-{{ section.id }} .step-indicator::before {
+      left: calc(50% / {{ section.settings.columns_mobile }});
+      right: calc(50% / {{ section.settings.columns_mobile }});
+    }
+  }
 {%- endstyle -%}
 
 {%- liquid
@@ -23,7 +78,7 @@
   endif
 -%}
 
-<div class="multicolumn color-{{ section.settings.color_scheme }} gradient{% unless section.settings.background_style == 'none' and settings.text_boxes_border_thickness > 0 or settings.text_boxes_shadow_opacity > 0 %} background-{{ section.settings.background_style }}{% endunless %}{% if section.settings.title == blank %} no-heading{% endif %}">
+<div class="multicolumn multicolumn-{{ section.id }} color-{{ section.settings.color_scheme }} gradient{% unless section.settings.background_style == 'none' and settings.text_boxes_border_thickness > 0 or settings.text_boxes_shadow_opacity > 0 %} background-{{ section.settings.background_style }}{% endunless %}{% if section.settings.title == blank %} no-heading{% endif %}">
   <div
     class="page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
     {% if settings.animations_reveal_on_scroll %}
@@ -42,6 +97,15 @@
         {%- endif -%}
       </div>
     {%- endunless -%}
+    
+    {%- comment -%} Step Indicator {%- endcomment -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="step-indicator">
+        {%- for block in section.blocks -%}
+          <div class="step-number">{{ forloop.index }}</div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
     <slider-component class="slider-mobile-gutter">
       <ul
         class="multicolumn-list contains-content-container grid grid--{{ section.settings.columns_mobile }}-col-tablet-down grid--{{ section.settings.columns_desktop }}-col-desktop{% if show_mobile_slider %} slider slider--tablet grid--peek{% endif %}"
