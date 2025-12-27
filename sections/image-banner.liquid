@@ -1,5 +1,30 @@
 {{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
 
+<style>
+  #Banner-{{ section.id }} .banner__box {
+    background: linear-gradient(360deg, #00000080, #0000000d) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 0 !important;
+    backdrop-filter: blur(10px) !important;
+    padding: 2rem !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  #Banner-{{ section.id }} .banner__heading {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+  }
+  
+  #Banner-{{ section.id }} .banner__text {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+  }
+  
+  @media screen and (max-width: 749px) {
+    #Banner-{{ section.id }} .banner__box {
+      padding: 1.5rem !important;
+    }
+  }
+</style>
+
 {%- if section.settings.image_height == 'adapt' and section.settings.image != blank -%}
   {%- style -%}
     @media screen and (max-width: 749px) {
