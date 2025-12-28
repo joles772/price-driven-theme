@@ -1,0 +1,239 @@
+/* Collection Tabs Navigation - Matching Multicolumn Style */
+.collection__navigation {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+  border-bottom: 2px solid #f0f0f0;
+  padding: 0;
+  list-style: none;
+  gap: 0;
+  flex-wrap: wrap;
+  direction: ltr;
+}
+
+.navigation-item {
+  background: transparent;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: -2px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navigation-item:hover {
+  color: #9a0f39;
+}
+
+.navigation-item.active {
+  color: #9a0f39;
+  border-bottom-color: #9a0f39;
+}
+
+.navigation-item img {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 0.25rem;
+}
+
+.navigation-item .tab-title {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  text-align: center;
+  text-transform: inherit;
+  letter-spacing: inherit;
+}
+
+/* Collection Tabs Content */
+.collections_lists {
+  position: relative;
+  direction: ltr;
+}
+
+.collection-tabs-list {
+  display: none;
+  animation: fadeIn 0.3s ease-in-out;
+  direction: ltr;
+  text-align: left;
+  width: 100%;
+}
+
+/* Force grid layout when active */
+.collection-tabs-list.active {
+  display: grid !important;
+  grid-auto-flow: row;
+  gap: 1rem;
+}
+
+/* Ensure grid columns are respected from the theme's grid system */
+.collection-tabs-list.grid--2-col-desktop {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.collection-tabs-list.grid--3-col-desktop {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.collection-tabs-list.grid--4-col-desktop {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.collection-tabs-list.grid--5-col-desktop {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.collection-tabs-list.grid--6-col-desktop {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+@media screen and (max-width: 749px) {
+  .collection-tabs-list.grid--1-col-tablet-down {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-tabs-list.grid--2-col-tablet-down {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Additional responsive rules */
+@media screen and (min-width: 750px) {
+  .collection-tabs-list.active {
+    gap: 2rem;
+  }
+}
+
+/* Ensure items don't stack vertically when they should be in grid */
+.collection-tabs-list.active .collection-list__item,
+.collection-tabs-list.active .grid__item {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  margin: 0;
+  direction: ltr;
+}
+
+/* Remove ::before styles from card elements in collection tabs */
+.collection-tabs-list .card__inner::before,
+.collection-tabs-list .card__inner:before {
+  display: none !important;
+  content: none !important;
+}
+
+.collection-tabs-list .card::before,
+.collection-tabs-list .card:before {
+  display: none !important;
+  content: none !important;
+}
+
+.collection-tabs-list .ratio::before,
+.collection-tabs-list .ratio:before {
+  display: none !important;
+  content: none !important;
+}
+
+/* Fix card content height issues */
+.collection-tabs-list .card {
+  display: flex !important;
+  flex-direction: column !important;
+  height: auto !important;
+  min-height: 200px !important;
+}
+
+.collection-tabs-list .card__inner {
+  display: flex !important;
+  flex-direction: column !important;
+  height: auto !important;
+  min-height: inherit !important;
+}
+
+.collection-tabs-list .card__content {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 1rem !important;
+  height: auto !important;
+  min-height: 60px !important;
+  flex-grow: 1 !important;
+  width: 100% !important;
+}
+
+.collection-tabs-list .card__media {
+  display: block !important;
+  height: auto !important;
+  min-height: 120px !important;
+}
+
+.collection-tabs-list .card__heading {
+  display: block !important;
+  height: auto !important;
+  min-height: 1.5rem !important;
+  line-height: 1.4 !important;
+}
+
+.collection-tabs-list .collection-list__item {
+  direction: ltr;
+  text-align: left;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.collection-tabs-list .grid__item {
+  direction: ltr;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 749px) {
+  .collection__navigation {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .navigation-item {
+    flex-direction: row;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .navigation-item img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .navigation-item .tab-title {
+    text-align: left;
+  }
+}
