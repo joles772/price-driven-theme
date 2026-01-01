@@ -254,6 +254,7 @@
 
     const filter1 = form.querySelector('#filter-1-{{ section.id }}');
     const filter2 = form.querySelector('#filter-2-{{ section.id }}');
+    const filter3 = form.querySelector('#filter-3-{{ section.id }}');
     const dependentOptions = form.getAttribute('data-dependent-options');
 
     if (!filter1 || !filter2 || !dependentOptions) return;
@@ -310,6 +311,35 @@
 
     // Initialize filter 2 on page load
     updateFilter2();
+
+    // Handle form submission
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const baseUrl = '{{ section.settings.filter_results_url | default: "/collections/all" }}';
+      const params = new URLSearchParams();
+
+      // Add filter 1 if selected
+      if (filter1 && filter1.value) {
+        params.append('filter.v.m.custom.filter1', filter1.value.replace(/-/g, '+'));
+      }
+
+      // Add filter 2 if selected
+      if (filter2 && filter2.value && !filter2.disabled) {
+        params.append('filter.v.m.custom.filter2', filter2.value.replace(/-/g, '+'));
+      }
+
+      // Add filter 3 if selected
+      if (filter3 && filter3.value) {
+        params.append('filter.v.m.custom.filter3', filter3.value.replace(/-/g, '+'));
+      }
+
+      // Construct final URL
+      const finalUrl = baseUrl + (params.toString() ? '?' + params.toString() : '');
+
+      // Redirect to filtered results
+      window.location.href = finalUrl;
+    });
   });
 </script>
 
@@ -427,8 +457,6 @@
         <div class="banner__filters">
           <form
             class="product-filter-form"
-            action="{{ section.settings.filter_results_url | default: '/collections/all' }}"
-            method="get"
             data-dependent-options="{{ section.settings.filter_2_tags | escape }}"
           >
             <div class="filter-controls">
@@ -437,7 +465,7 @@
                   <label for="filter-1-{{ section.id }}" class="filter-label">
                     {{ section.settings.filter_1_label | default: 'Filter 1' }}
                   </label>
-                  <select id="filter-1-{{ section.id }}" name="filter.v.availability" class="filter-select">
+                  <select id="filter-1-{{ section.id }}" name="filter1" class="filter-select">
                     <option value="">All {{ section.settings.filter_1_label | default: 'Options' }}</option>
                     {%- assign filter_1_options = section.settings.filter_1_tags | split: ',' -%}
                     {%- for option in filter_1_options -%}
@@ -453,7 +481,7 @@
                   <label for="filter-2-{{ section.id }}" class="filter-label">
                     {{ section.settings.filter_2_label | default: 'Filter 2' }}
                   </label>
-                  <select id="filter-2-{{ section.id }}" name="filter.v.price" class="filter-select" disabled>
+                  <select id="filter-2-{{ section.id }}" name="filter2" class="filter-select" disabled>
                     <option value="">Select {{ section.settings.filter_1_label | default: 'Filter 1' }} first</option>
                   </select>
                 </div>
@@ -464,7 +492,7 @@
                   <label for="filter-3-{{ section.id }}" class="filter-label">
                     {{ section.settings.filter_3_label | default: 'Filter 3' }}
                   </label>
-                  <select id="filter-3-{{ section.id }}" name="filter.v.vendor" class="filter-select">
+                  <select id="filter-3-{{ section.id }}" name="filter3" class="filter-select">
                     <option value="">All {{ section.settings.filter_3_label | default: 'Options' }}</option>
                     {%- assign filter_3_options = section.settings.filter_3_tags | split: ',' -%}
                     {%- for option in filter_3_options -%}

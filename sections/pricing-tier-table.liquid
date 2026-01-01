@@ -263,9 +263,11 @@
           {%- endfor -%}
         </ul>
 
-        <a href="{{ section.settings.basic_button_link }}" class="pricing-tier__button">
-          {{ section.settings.basic_button_text }}
-        </a>
+        {%- unless section.settings.basic_button_text == blank -%}
+          <a href="{{ section.settings.basic_button_link }}" class="pricing-tier__button">
+            {{ section.settings.basic_button_text }}
+          </a>
+        {%- endunless -%}
       </div>
 
       {%- comment -%} Standard Tier {%- endcomment -%}
@@ -301,9 +303,11 @@
           {%- endfor -%}
         </ul>
 
-        <a href="{{ section.settings.standard_button_link }}" class="pricing-tier__button">
-          {{ section.settings.standard_button_text }}
-        </a>
+        {%- unless section.settings.standard_button_text == blank -%}
+          <a href="{{ section.settings.standard_button_link }}" class="pricing-tier__button">
+            {{ section.settings.standard_button_text }}
+          </a>
+        {%- endunless -%}
       </div>
 
       {%- comment -%} Premium Tier {%- endcomment -%}
@@ -339,9 +343,11 @@
           {%- endfor -%}
         </ul>
 
-        <a href="{{ section.settings.premium_button_link }}" class="pricing-tier__button">
-          {{ section.settings.premium_button_text }}
-        </a>
+        {%- unless section.settings.premium_button_text == blank -%}
+          <a href="{{ section.settings.premium_button_link }}" class="pricing-tier__button">
+            {{ section.settings.premium_button_text }}
+          </a>
+        {%- endunless -%}
       </div>
     </div>
   </div>
