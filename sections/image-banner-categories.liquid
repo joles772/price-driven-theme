@@ -132,37 +132,12 @@
     transform: translateY(0);
   }
 
-  #Banner-{{ section.id }} .banner__content {
-    position: relative;
-  }
-
-  #Banner-{{ section.id }} .banner__box {
-    background: linear-gradient(360deg, #00000080, #0000000d) !important;
-    border: 2px solid rgba(255, 255, 255, 0.7) !important;
-    border-radius: 0 !important;
-    backdrop-filter: blur(10px) !important;
-    padding: 2rem !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
-    max-width: 200px !important;
-  }
-
-  #Banner-{{ section.id }} .banner__heading {
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
-    font-size: 4rem !important;
-    font-weight: bold !important;
-    color: white !important;
-  }
-
-  #Banner-{{ section.id }} .banner__text {
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
-    color: white !important;
-  }
-
   #Banner-{{ section.id }} .banner__second-text {
     position: absolute;
     z-index: 10;
     padding: 1rem;
     text-align: center;
+    pointer-events: auto;
     {%- case section.settings.second_text_position -%}
       {%- when 'top-left' -%}
         top: 35.2px; left: 35.2px;
@@ -183,6 +158,38 @@
       {%- when 'bottom-right' -%}
         bottom: 35.2px; right: 35.2px;
     {%- endcase -%}
+  }
+
+  #Banner-{{ section.id }} .banner__second-text--mobile {
+    display: none;
+  }
+
+  #Banner-{{ section.id }} .banner__content {
+    position: relative;
+    pointer-events: none;
+  }
+
+  #Banner-{{ section.id }} .banner__box {
+    background: linear-gradient(360deg, #00000080, #0000000d) !important;
+    border: 2px solid rgba(255, 255, 255, 0.7) !important;
+    border-radius: 0 !important;
+    backdrop-filter: blur(10px) !important;
+    padding: 2rem !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    max-width: 200px !important;
+    pointer-events: auto;
+  }
+
+  #Banner-{{ section.id }} .banner__heading {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+    font-size: 4rem !important;
+    font-weight: bold !important;
+    color: white !important;
+  }
+
+  #Banner-{{ section.id }} .banner__text {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+    color: white !important;
   }
 
   #Banner-{{ section.id }} .banner__second-text h3 {
@@ -243,6 +250,63 @@
 
     #Banner-{{ section.id }} .filter-submit {
       align-self: stretch;
+    }
+
+     #Banner-{{ section.id }} .banner__box {
+      max-width: 100% !important;
+      background: rgba(0, 0, 0) !important;
+      border: 0 !important;
+    }
+
+    #Banner-{{ section.id }} .banner__media {
+      position: relative;
+    }
+
+    #Banner-{{ section.id }} .banner__second-text--mobile {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-direction: column !important;
+      position: absolute !important;
+      top: auto !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      transform: none !important;
+      width: 100% !important;
+      margin-left: 0 !important;
+      padding: 2rem 1rem !important;
+      background: rgba(0, 0, 0, {{ section.settings.image_overlay_opacity | divided_by: 100.0 }}) !important;
+      text-align: center !important;
+      z-index: 15 !important;
+    }
+
+    #Banner-{{ section.id }} .banner__second-text--mobile h3 {
+      margin: 0 0 1rem 0 !important;
+      color: white !important;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7) !important;
+      font-size: 2.5rem !important;
+      font-weight: bold !important;
+      text-align: center !important;
+    }
+
+    #Banner-{{ section.id }} .banner__second-text--mobile p {
+      margin: 0 0 1rem 0 !important;
+      color: white !important;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+      font-size: 1.2rem !important;
+      line-height: 1.4 !important;
+      text-align: center !important;
+    }
+
+    #Banner-{{ section.id }} .banner__second-text--mobile .button {
+      background-color: transparent !important;
+      text-align: center !important;
+      display: inline-block !important;
+    }
+
+    #Banner-{{ section.id }} .banner__second-text:not(.banner__second-text--mobile) {
+      display: none !important;
     }
   }
 {%- endstyle -%}
@@ -395,6 +459,29 @@
           widths: widths,
           fetchpriority: fetch_priority
       }}
+
+      {%- comment -%} Second text section for mobile - positioned over image {%- endcomment -%}
+      {%- if section.settings.second_text_title != blank
+        or section.settings.second_text_subtitle != blank
+        or section.settings.second_text_button_label != blank
+      -%}
+        <div class="banner__second-text banner__second-text--mobile">
+          {%- if section.settings.second_text_title != blank -%}
+            <h3>{{ section.settings.second_text_title | escape }}</h3>
+          {%- endif -%}
+          {%- if section.settings.second_text_subtitle != blank -%}
+            <p>{{ section.settings.second_text_subtitle | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.second_text_button_label != blank -%}
+            <a
+              href="{{ section.settings.second_text_button_link | default: '#' }}"
+              class="button button--primary"
+            >
+              {{ section.settings.second_text_button_label | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
     </div>
   {%- elsif section.settings.image_2 == blank -%}
     <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
@@ -511,29 +598,29 @@
         </div>
       {%- endif -%}
     </div>
-
-    {%- if section.settings.second_text_title != blank
-      or section.settings.second_text_subtitle != blank
-      or section.settings.second_text_button_label != blank
-    -%}
-      <div class="banner__second-text">
-        {%- if section.settings.second_text_title != blank -%}
-          <h3>{{ section.settings.second_text_title | escape }}</h3>
-        {%- endif -%}
-        {%- if section.settings.second_text_subtitle != blank -%}
-          <p>{{ section.settings.second_text_subtitle | escape }}</p>
-        {%- endif -%}
-        {%- if section.settings.second_text_button_label != blank -%}
-          <a
-            href="{{ section.settings.second_text_button_link | default: '#' }}"
-            class="button button--primary"
-          >
-            {{ section.settings.second_text_button_label | escape }}
-          </a>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
   </div>
+
+  {%- if section.settings.second_text_title != blank
+    or section.settings.second_text_subtitle != blank
+    or section.settings.second_text_button_label != blank
+  -%}
+    <div class="banner__second-text">
+      {%- if section.settings.second_text_title != blank -%}
+        <h3>{{ section.settings.second_text_title | escape }}</h3>
+      {%- endif -%}
+      {%- if section.settings.second_text_subtitle != blank -%}
+        <p>{{ section.settings.second_text_subtitle | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.second_text_button_label != blank -%}
+        <a
+          href="{{ section.settings.second_text_button_link | default: '#' }}"
+          class="button button--primary"
+        >
+          {{ section.settings.second_text_button_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
 </div>
 
 {% schema %}
