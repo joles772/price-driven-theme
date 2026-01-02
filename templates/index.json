@@ -108,7 +108,7 @@
           "settings": {
             "caption": "Step 1",
             "heading": "Choose Your Car",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "text": "<p>Browse our selection and find your perfect car. Filter by make, model and year.</p>",
             "button_label": "Button label",
             "button_link": ""
           }
@@ -117,8 +117,8 @@
           "type": "row",
           "settings": {
             "caption": "Step 2",
-            "heading": "Download a Report or Go Premium",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "heading": "Download a Free Report or Go Premium",
+            "text": "<p>Download one of our free discount reports. You’ll see the dealer’s actual cost including incentives and factory discounts. Walk into the dealership with confidence.</p><p>OR</p><p>Choose our premium service and let us handle the details. We set up your car deal, and you just need to sign for the car at the dealership.</p>",
             "button_label": "Button label",
             "button_link": ""
           }
