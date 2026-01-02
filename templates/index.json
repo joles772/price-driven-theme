@@ -9,51 +9,65 @@
  */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "image_banner_categories_y8axkJ": {
+      "type": "image-banner-categories",
       "blocks": {
-        "heading": {
+        "heading_QywqrU": {
           "type": "heading",
           "settings": {
-            "heading": "Image banner",
-            "heading_size": "h0"
+            "heading": "Or Browse Our Free Discount Reports",
+            "heading_size": "h1"
           }
         },
-        "text": {
+        "text_6CdDBJ": {
           "type": "text",
           "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text": "See what dealers pay to manufacturers",
             "text_style": "body"
           }
         },
-        "button": {
+        "buttons_HL8nyi": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
+            "button_label_1": "Button label",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
             "button_link_2": "",
             "button_style_secondary_2": false
           }
         }
       },
       "block_order": [
-        "heading",
-        "text",
-        "button"
+        "heading_QywqrU",
+        "text_6CdDBJ",
+        "buttons_HL8nyi"
       ],
+      "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
+        "image": "shopify://shop_images/home-banner_f2c626e2-a35e-440f-ae5d-fe7e5a667233.jpg",
+        "image_overlay_opacity": 50,
+        "image_height": "medium",
         "image_behavior": "none",
-        "desktop_content_position": "bottom-center",
+        "filter_1_label": "Make",
+        "filter_1_tags": "Toyota,Chrysler",
+        "filter_2_label": "Model",
+        "filter_2_tags": "Toyota:Camry,Corolla,Sienna,RAV4|Chrysler:Pacifica",
+        "filter_3_label": "Year",
+        "filter_3_tags": "2018,2019,2020,2021,2022",
+        "filter_results_url": "shopify://collections/all",
+        "desktop_content_position": "middle-right",
         "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
+        "show_text_box": true,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
         "mobile_content_alignment": "center",
-        "show_text_below": false
+        "show_text_below": true,
+        "second_text_title": "Let us Negotiate Your Car Deal",
+        "second_text_subtitle": "Our team of professional car negotiators set up your deal, so you don't have to.",
+        "second_text_button_label": "Find Out More",
+        "second_text_button_link": "",
+        "second_text_position": "middle-left"
       }
     },
     "rich_text": {
@@ -62,14 +76,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Talk about your brand",
+            "heading": "Welcome to Price Driven",
             "heading_size": "h1"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+            "text": "<p>We're a professional car negotiation platform specializing in getting you the into a new car more quickly and easily. Scroll down to fond out how.</p>"
           }
         }
       },
@@ -86,83 +100,126 @@
         "padding_bottom": 0
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "collection": "all",
-        "products_to_show": 8,
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 4,
-        "enable_desktop_slider": false,
-        "full_width": false,
-        "show_view_all": false,
-        "view_all_style": "solid",
-        "color_scheme": "scheme-1",
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 28,
-        "padding_bottom": 36
-      }
-    },
-    "collage": {
-      "type": "collage",
+    "multicolumn_steps_tabs_nJUbU7": {
+      "type": "multicolumn-steps-tabs",
       "blocks": {
-        "collection-0": {
-          "type": "collection",
+        "column_wtExrW": {
+          "type": "column",
           "settings": {
-            "collection": ""
+            "title": "Choose Your Car",
+            "text": "<p>Browse our selection and find your perfect car. Filter by make, model and year.</p>",
+            "link_label": "",
+            "link": ""
           }
         },
-        "product": {
-          "type": "product",
+        "column_CJALDg": {
+          "type": "column",
           "settings": {
-            "product": "",
-            "second_image": false
+            "title": "Download Your Discount Report",
+            "text": "<p>Download one of our free discount reports. You’ll see the dealer’s actual cost for ANY new car in Canada including hidden incentives and factory discounts. No more wondering if you’re overpaying.</p>",
+            "link_label": "",
+            "link": ""
           }
         },
-        "collection-1": {
-          "type": "collection",
+        "column_dgctz7": {
+          "type": "column",
           "settings": {
-            "collection": ""
+            "title": "Negotiate With Confidence",
+            "text": "<p>With your free discount report in hand, negotiate knowing all the facts. Walk into the dealership with confidence.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_XTnhTb": {
+          "type": "column",
+          "settings": {
+            "title": "Choose Your Car",
+            "text": "<p>Browse our selection and find your perfect car. Filter by make, model and year.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_BNWE9T": {
+          "type": "column",
+          "settings": {
+            "title": "Go Premium",
+            "text": "<p>Select our premium service car negotiating service. Let us do the talking. </p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_MPPGMV": {
+          "type": "column",
+          "settings": {
+            "title": "Relax",
+            "text": "<p>Sit back and relax while we handle all the details. Just go into the dealership and buy your car once it's ready.</p>",
+            "link_label": "",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "collection-0",
-        "product",
-        "collection-1"
+        "column_wtExrW",
+        "column_CJALDg",
+        "column_dgctz7",
+        "column_XTnhTb",
+        "column_BNWE9T",
+        "column_MPPGMV"
       ],
+      "name": "t:sections.multicolumn.presets.name",
       "settings": {
-        "heading": "Multimedia collage",
-        "heading_size": "h2",
-        "desktop_layout": "left",
-        "mobile_layout": "collage",
-        "card_styles": "product-card-wrapper",
-        "color_scheme": "scheme-1",
+        "title": "Our Offers",
+        "heading_size": "h1",
+        "tab_names": "Free, Premium",
+        "columns_per_tab": "3, 3",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
         "padding_top": 36,
         "padding_bottom": 36
       }
     },
-    "video": {
-      "type": "video",
+    "pricing_tier_table_7iaVAp": {
+      "type": "pricing-tier-table",
+      "name": "Pricing Tier Table",
       "settings": {
-        "heading": "",
+        "title": "See The Difference",
+        "subtitle": "See what Price Driven Free Discount Reports and Premium Car Negotiating Services can do for you.",
         "heading_size": "h1",
-        "enable_video_looping": false,
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "description": "",
-        "full_width": false,
-        "color_scheme": "scheme-1",
+        "color_scheme": "",
+        "currency_symbol": "$",
+        "price_period": "per month",
+        "featured_tier": "premium",
+        "popular_badge_text": "Most Popular",
+        "show_feature_icons": true,
+        "basic_name": "Without Price Driven",
+        "basic_price": "",
+        "basic_description": "Buy a car without knowing all the details",
+        "basic_features": "",
+        "basic_disabled_features": "Limited or unclear discount data\nNo guaranteed savings\nHigh Stress\n3+ Hours Time Commitment\nNegotiate alone",
+        "basic_button_text": "",
+        "basic_button_link": "",
+        "standard_name": "With Price Driven Free Discount Reports",
+        "standard_price": "",
+        "standard_description": "Download a free discount report and negotiate with confidence",
+        "standard_features": "See dealers discount\n1 hour average time commitment\nLow Stress\nNegotiate with confidence",
+        "standard_disabled_features": "No guaranteed savings",
+        "standard_button_text": "Browse Discount Reports",
+        "standard_button_link": "",
+        "premium_name": "With Price Driven Premium Car Negotiating Services",
+        "premium_price": "99",
+        "premium_description": "Site back and relax while we set up your car deal for you",
+        "premium_features": "See dealers discount\n5 minute average time commitment\nNo Stress\nNo Negotiation\nGuaranteed best discount",
+        "premium_disabled_features": "",
+        "premium_button_text": "Go Premium",
+        "premium_button_link": "",
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -173,8 +230,8 @@
         "column1": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "title": "Unlock Dealer Pricing",
+            "text": "<p>Stop guessing and start saving. With Price Driven, you’ll see the dealer’s actual cost for ANY new car in Canada including hidden incentives and factory discounts. No more wondering if you’re overpaying.</p>",
             "link_label": "",
             "link": ""
           }
@@ -182,8 +239,8 @@
         "column2": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "title": "The Key To Better Pricing",
+            "text": "<p>Negotiate smarter with our Discount report. Walk into the dealership with confidence or let us do the talking.</p>",
             "link_label": "",
             "link": ""
           }
@@ -191,8 +248,8 @@
         "column3": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "title": "New Car, Better Deal",
+            "text": "<p>Close the deal with Price Driven’s certified network of dealers no hidden fees, no last-minute tricks. Our partners agree to upfront pricing and transparent terms, so you drive away happy!<br/></p>",
             "link_label": "",
             "link": ""
           }
@@ -220,69 +277,163 @@
         "padding_bottom": 36
       }
     },
-    "image_banner_categories_y8axkJ": {
-      "type": "image-banner-categories",
+    "collection_tabs_7kNNtX": {
+      "type": "collection-tabs",
       "blocks": {
-        "heading_QywqrU": {
-          "type": "heading",
+        "collection_tab_Jw9xwA": {
+          "type": "collection_tab",
           "settings": {
-            "heading": "Image banner",
-            "heading_size": "h1"
+            "tab_title": "A-B",
+            "collection_list": [
+              "acura",
+              "alfa-romeo",
+              "audi",
+              "bmw",
+              "buick"
+            ]
           }
         },
-        "text_6CdDBJ": {
-          "type": "text",
+        "collection_tab_FWRjtJ": {
+          "type": "collection_tab",
           "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
+            "tab_title": "C-F",
+            "collection_list": [
+              "cadillac",
+              "chevrolet",
+              "chrysler",
+              "dodge",
+              "fiat",
+              "ford"
+            ]
           }
         },
-        "buttons_HL8nyi": {
-          "type": "buttons",
+        "collection_tab_cCK3Lp": {
+          "type": "collection_tab",
           "settings": {
-            "button_label_1": "Button label",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "Button label",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "tab_title": "G-J",
+            "collection_list": [
+              "genesis",
+              "gmc",
+              "honda",
+              "hyundai",
+              "jaguar",
+              "jeep"
+            ]
+          }
+        },
+        "collection_tab_CHPbKh": {
+          "type": "collection_tab",
+          "settings": {
+            "tab_title": "K-N",
+            "collection_list": [
+              "kia",
+              "land-rover",
+              "lexus",
+              "lincoln",
+              "mazda",
+              "mercedes-benz",
+              "mini",
+              "mitsubishi",
+              "nissan"
+            ]
+          }
+        },
+        "collection_tab_3CMyHN": {
+          "type": "collection_tab",
+          "settings": {
+            "tab_title": "P-Z",
+            "collection_list": [
+              "polestar",
+              "porsche",
+              "ram",
+              "subaru",
+              "sedans-under-60k-canada-2026",
+              "toyota",
+              "volkswagen",
+              "volvo"
+            ]
           }
         }
       },
       "block_order": [
-        "heading_QywqrU",
-        "text_6CdDBJ",
-        "buttons_HL8nyi"
+        "collection_tab_Jw9xwA",
+        "collection_tab_FWRjtJ",
+        "collection_tab_cCK3Lp",
+        "collection_tab_CHPbKh",
+        "collection_tab_3CMyHN"
       ],
-      "name": "t:sections.image-banner.presets.name",
+      "name": "Collection Tabs",
       "settings": {
-        "image_overlay_opacity": 0,
-        "image_height": "medium",
-        "image_behavior": "none",
-        "filter_1_label": "Make",
-        "filter_1_tags": "Toyota,Chrysler",
-        "filter_2_label": "Model",
-        "filter_2_tags": "Toyota:Camry,Corolla,Sienna,RAV4|Chrysler:Pacifica",
-        "filter_3_label": "Year",
-        "filter_3_tags": "2018,2019,2020,2021,2022",
-        "filter_results_url": "shopify://collections/all",
-        "desktop_content_position": "middle-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": true,
+        "title": "Discount Reports By Make",
+        "heading_size": "h1",
+        "image_ratio": "adapt",
+        "columns_desktop": 4,
         "color_scheme": "",
-        "stack_images_on_mobile": true,
-        "mobile_content_alignment": "center",
-        "show_text_below": true
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "testimonials_MXGPQx": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_8FBDjR": {
+          "type": "testimonial",
+          "settings": {
+            "customer_name": "Sarah Johnson",
+            "customer_title": "Verified Buyer",
+            "star_rating": 5,
+            "testimonial_text": "This product exceeded my expectations! The quality is outstanding and the customer service was fantastic. I would definitely recommend this to anyone looking for a reliable solution.",
+            "testimonial_date": "2024-01-15"
+          }
+        },
+        "testimonial_DMM7TY": {
+          "type": "testimonial",
+          "settings": {
+            "customer_name": "Mike Chen",
+            "customer_title": "Repeat Customer",
+            "star_rating": 5,
+            "testimonial_text": "I've been using this for months now and it's been perfect. Great value for money and exactly what I needed. The shipping was fast too!",
+            "testimonial_date": "2024-02-08"
+          }
+        },
+        "testimonial_z6tmAe": {
+          "type": "testimonial",
+          "settings": {
+            "customer_name": "Emily Rodriguez",
+            "customer_title": "First-time Buyer",
+            "star_rating": 4,
+            "testimonial_text": "Really happy with my purchase. The product works as described and arrived quickly. Would buy again!",
+            "testimonial_date": "2024-02-20"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_8FBDjR",
+        "testimonial_DMM7TY",
+        "testimonial_z6tmAe"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "title": "What Our Customers Are Saying",
+        "subtitle": "",
+        "heading_size": "h1",
+        "layout": "carousel",
+        "columns_desktop": 3,
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     }
   },
   "order": [
-    "image_banner",
+    "image_banner_categories_y8axkJ",
     "rich_text",
-    "featured_collection",
-    "collage",
-    "video",
+    "multicolumn_steps_tabs_nJUbU7",
+    "pricing_tier_table_7iaVAp",
     "multicolumn",
-    "image_banner_categories_y8axkJ"
+    "collection_tabs_7kNNtX",
+    "testimonials_MXGPQx"
   ]
 }
