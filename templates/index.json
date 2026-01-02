@@ -425,6 +425,49 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "collection_tabs_mnNj8A": {
+      "type": "collection-tabs",
+      "blocks": {
+        "collection_tab_beiF7Y": {
+          "type": "collection_tab",
+          "settings": {
+            "tab_title": "Featured Collections",
+            "collection_list": []
+          }
+        },
+        "collection_tab_ekK3m7": {
+          "type": "collection_tab",
+          "settings": {
+            "tab_title": "Popular Categories",
+            "collection_list": []
+          }
+        },
+        "collection_tab_Lweyc6": {
+          "type": "collection_tab",
+          "settings": {
+            "tab_title": "New Collections",
+            "collection_list": []
+          }
+        }
+      },
+      "block_order": [
+        "collection_tab_beiF7Y",
+        "collection_tab_ekK3m7",
+        "collection_tab_Lweyc6"
+      ],
+      "name": "Collection Tabs",
+      "settings": {
+        "title": "Shop by Category",
+        "heading_size": "h1",
+        "image_ratio": "adapt",
+        "columns_desktop": 4,
+        "color_scheme": "",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
@@ -434,6 +477,7 @@
     "pricing_tier_table_7iaVAp",
     "multicolumn",
     "collection_tabs_7kNNtX",
+    "collection_tabs_mnNj8A",
     "testimonials_MXGPQx"
   ]
 }
