@@ -31,13 +31,13 @@
 
   .pricing-tier {
     background: white;
-    border-radius: 12px;
+    border-radius: 0;
     padding: 2.5rem 2rem;
     text-align: center;
     position: relative;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 2px solid transparent;
+    border: 2px solid #e0e0e0;
     display: flex;
     flex-direction: column;
   }
@@ -159,7 +159,7 @@
     color: #333;
     border: 2px solid #dee2e6;
     padding: 1rem 2rem;
-    border-radius: 8px;
+    border-radius: 0;
     font-weight: 600;
     text-decoration: none;
     display: inline-block;
@@ -188,12 +188,34 @@
 
   @media screen and (max-width: 749px) {
     .pricing-tier-table {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 0;
+      padding: 20px 0 0 0;
+      margin: 0;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      width: 100%;
+    }
+
+    .pricing-tier-table::-webkit-scrollbar {
+      display: none;
     }
 
     .pricing-tier {
-      padding: 2rem 1.5rem;
+      flex: 0 0 100%;
+      width: 100%;
+      min-width: 100%;
+      scroll-snap-align: start;
+      padding: 1.5rem 1rem;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .pricing-tier.featured::before {
+      top: -12px;
     }
 
     .pricing-tier.featured {
@@ -201,11 +223,40 @@
     }
 
     .pricing-tier.featured:hover {
-      transform: translateY(-8px);
+      transform: translateY(-4px);
     }
 
     .pricing-tier__price-amount {
       font-size: 2.5rem;
+    }
+
+    /* Mobile carousel indicators */
+    .pricing-tier-section .carousel-indicators {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .pricing-tier-section .carousel-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(var(--color-foreground), 0.2);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .pricing-tier-section .carousel-dot.active {
+      background: rgb(var(--color-foreground));
+      transform: scale(1.2);
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .pricing-tier-section .carousel-indicators {
+      display: none;
     }
   }
 {%- endstyle -%}
@@ -229,10 +280,18 @@
       </div>
     {%- endunless -%}
 
-    <div class="pricing-tier-table">
+    <div class="pricing-tier-table" id="pricing-carousel">
       {%- comment -%} Basic Tier {%- endcomment -%}
-      <div class="pricing-tier{% if section.settings.featured_tier == 'basic' %} featured{% endif %}">
+      <div class="pricing-tier{% if section.settings.featured_tier == 'basic' %} featured{% endif %}" data-tier="0">
         <h3 class="pricing-tier__name">{{ section.settings.basic_name }}</h3>
+
+        {%- unless section.settings.basic_price == blank -%}
+          <div class="pricing-tier__price">
+            <span class="pricing-tier__price-currency">{{ section.settings.currency_symbol }}</span>
+            <span class="pricing-tier__price-amount">{{ section.settings.basic_price }}</span>
+            <span class="pricing-tier__price-period">{{ section.settings.price_period }}</span>
+          </div>
+        {%- endunless -%}
 
         {%- unless section.settings.basic_description == blank -%}
           <p class="pricing-tier__description">{{ section.settings.basic_description }}</p>
@@ -271,8 +330,16 @@
       </div>
 
       {%- comment -%} Standard Tier {%- endcomment -%}
-      <div class="pricing-tier{% if section.settings.featured_tier == 'standard' %} featured{% endif %}">
+      <div class="pricing-tier{% if section.settings.featured_tier == 'standard' %} featured{% endif %}" data-tier="1">
         <h3 class="pricing-tier__name">{{ section.settings.standard_name }}</h3>
+
+        {%- unless section.settings.standard_price == blank -%}
+          <div class="pricing-tier__price">
+            <span class="pricing-tier__price-currency">{{ section.settings.currency_symbol }}</span>
+            <span class="pricing-tier__price-amount">{{ section.settings.standard_price }}</span>
+            <span class="pricing-tier__price-period">{{ section.settings.price_period }}</span>
+          </div>
+        {%- endunless -%}
 
         {%- unless section.settings.standard_description == blank -%}
           <p class="pricing-tier__description">{{ section.settings.standard_description }}</p>
@@ -311,8 +378,16 @@
       </div>
 
       {%- comment -%} Premium Tier {%- endcomment -%}
-      <div class="pricing-tier{% if section.settings.featured_tier == 'premium' %} featured{% endif %}">
+      <div class="pricing-tier{% if section.settings.featured_tier == 'premium' %} featured{% endif %}" data-tier="2">
         <h3 class="pricing-tier__name">{{ section.settings.premium_name }}</h3>
+
+        {%- unless section.settings.premium_price == blank -%}
+          <div class="pricing-tier__price">
+            <span class="pricing-tier__price-currency">{{ section.settings.currency_symbol }}</span>
+            <span class="pricing-tier__price-amount">{{ section.settings.premium_price }}</span>
+            <span class="pricing-tier__price-period">{{ section.settings.price_period }}</span>
+          </div>
+        {%- endunless -%}
 
         {%- unless section.settings.premium_description == blank -%}
           <p class="pricing-tier__description">{{ section.settings.premium_description }}</p>
@@ -350,8 +425,100 @@
         {%- endunless -%}
       </div>
     </div>
+
+    {%- comment -%} Mobile Carousel Indicators {%- endcomment -%}
+    <div class="carousel-indicators">
+      <button class="carousel-dot active" data-tier="0" aria-label="View Basic Plan"></button>
+      <button class="carousel-dot" data-tier="1" aria-label="View Standard Plan"></button>
+      <button class="carousel-dot" data-tier="2" aria-label="View Premium Plan"></button>
+    </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const carousel = document.getElementById('pricing-carousel');
+    const dots = document.querySelectorAll('.carousel-dot');
+    const tiers = document.querySelectorAll('.pricing-tier');
+
+    if (!carousel || dots.length === 0) return;
+
+    let currentTier = 0;
+    const totalTiers = tiers.length;
+
+    // Update active dot
+    function updateDots() {
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentTier);
+      });
+    }
+
+    // Scroll to specific tier
+    function scrollToTier(tierIndex) {
+      if (tierIndex >= 0 && tierIndex < totalTiers) {
+        const tier = tiers[tierIndex];
+        const scrollLeft = tierIndex * carousel.offsetWidth;
+
+        carousel.scrollTo({
+          left: scrollLeft,
+          behavior: 'smooth',
+        });
+
+        currentTier = tierIndex;
+        updateDots();
+      }
+    }
+
+    // Handle dot clicks
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        scrollToTier(index);
+      });
+    });
+
+    // Handle scroll events to update active dot
+    let scrollTimeout;
+    carousel.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const scrollLeft = carousel.scrollLeft;
+        const containerWidth = carousel.offsetWidth;
+        const newTier = Math.round(scrollLeft / containerWidth);
+
+        if (newTier !== currentTier && newTier >= 0 && newTier < totalTiers) {
+          currentTier = newTier;
+          updateDots();
+        }
+      }, 100);
+    });
+
+    // Touch/swipe support
+    let startX = 0;
+    let scrollStart = 0;
+
+    carousel.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      scrollStart = carousel.scrollLeft;
+    });
+
+    carousel.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      const x = e.touches[0].clientX;
+      const walk = (startX - x) * 1.5;
+      carousel.scrollLeft = scrollStart + walk;
+    });
+
+    carousel.addEventListener('touchend', () => {
+      const scrollLeft = carousel.scrollLeft;
+      const containerWidth = carousel.offsetWidth;
+      const targetTier = Math.round(scrollLeft / containerWidth);
+      scrollToTier(targetTier);
+    });
+
+    // Initialize
+    updateDots();
+  });
+</script>
 
 {% schema %}
 {
