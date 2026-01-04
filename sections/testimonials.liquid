@@ -1,4 +1,11 @@
 {{ 'section-testimonials.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -30,59 +37,118 @@
       </div>
     {%- endunless -%}
 
-    <div class="testimonials-grid">
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when 'testimonial' -%}
-            <div class="testimonial-card" {{ block.shopify_attributes }}>
-              {%- if block.settings.star_rating > 0 -%}
-                <div class="testimonial__rating">
-                  {%- for i in (1..5) -%}
-                    {%- if i <= block.settings.star_rating -%}
-                      <span class="star filled">★</span>
-                    {%- else -%}
-                      <span class="star empty">☆</span>
+    <div class="testimonials-carousel-container" data-layout="{{ section.settings.layout }}">
+      {%- if section.settings.layout == 'carousel' -%}
+        <div class="owl-carousel testimonials-carousel" data-columns="{{ section.settings.columns_desktop }}">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'testimonial' -%}
+                <div class="testimonial-card" {{ block.shopify_attributes }}>
+                  {%- if block.settings.star_rating > 0 -%}
+                    <div class="testimonial__rating">
+                      {%- for i in (1..5) -%}
+                        {%- if i <= block.settings.star_rating -%}
+                          <span class="star filled">★</span>
+                        {%- else -%}
+                          <span class="star empty">☆</span>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  {%- endif -%}
+
+                  {%- unless block.settings.testimonial_text == blank -%}
+                    <blockquote class="testimonial__quote">
+                      <p>{{ block.settings.testimonial_text }}</p>
+                    </blockquote>
+                  {%- endunless -%}
+
+                  <div class="testimonial__author">
+                    {%- if block.settings.customer_image != blank -%}
+                      <div class="testimonial__image">
+                        {{
+                          block.settings.customer_image
+                          | image_url: width: 120
+                          | image_tag: loading: 'lazy', alt: block.settings.customer_name, widths: '60, 120, 180'
+                        }}
+                      </div>
                     {%- endif -%}
-                  {%- endfor -%}
-                </div>
-              {%- endif -%}
 
-              {%- unless block.settings.testimonial_text == blank -%}
-                <blockquote class="testimonial__quote">
-                  <p>{{ block.settings.testimonial_text }}</p>
-                </blockquote>
-              {%- endunless -%}
+                    <div class="testimonial__details">
+                      {%- unless block.settings.customer_name == blank -%}
+                        <cite class="testimonial__name">{{ block.settings.customer_name }}</cite>
+                      {%- endunless -%}
 
-              <div class="testimonial__author">
-                {%- if block.settings.customer_image != blank -%}
-                  <div class="testimonial__image">
-                    {{
-                      block.settings.customer_image
-                      | image_url: width: 120
-                      | image_tag: loading: 'lazy', alt: block.settings.customer_name, widths: '60, 120, 180'
-                    }}
+                      {%- unless block.settings.customer_title == blank -%}
+                        <p class="testimonial__title">{{ block.settings.customer_title }}</p>
+                      {%- endunless -%}
+
+                      {%- unless block.settings.testimonial_date == blank -%}
+                        <time class="testimonial__date" datetime="{{ block.settings.testimonial_date }}">
+                          {{ block.settings.testimonial_date | date: '%B %d, %Y' }}
+                        </time>
+                      {%- endunless -%}
+                    </div>
                   </div>
-                {%- endif -%}
-
-                <div class="testimonial__details">
-                  {%- unless block.settings.customer_name == blank -%}
-                    <cite class="testimonial__name">{{ block.settings.customer_name }}</cite>
-                  {%- endunless -%}
-
-                  {%- unless block.settings.customer_title == blank -%}
-                    <p class="testimonial__title">{{ block.settings.customer_title }}</p>
-                  {%- endunless -%}
-
-                  {%- unless block.settings.testimonial_date == blank -%}
-                    <time class="testimonial__date" datetime="{{ block.settings.testimonial_date }}">
-                      {{ block.settings.testimonial_date | date: '%B %d, %Y' }}
-                    </time>
-                  {%- endunless -%}
                 </div>
-              </div>
-            </div>
-        {%- endcase -%}
-      {%- endfor -%}
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <div class="testimonials-grid">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'testimonial' -%}
+                <div class="testimonial-card" {{ block.shopify_attributes }}>
+                  {%- if block.settings.star_rating > 0 -%}
+                    <div class="testimonial__rating">
+                      {%- for i in (1..5) -%}
+                        {%- if i <= block.settings.star_rating -%}
+                          <span class="star filled">★</span>
+                        {%- else -%}
+                          <span class="star empty">☆</span>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  {%- endif -%}
+
+                  {%- unless block.settings.testimonial_text == blank -%}
+                    <blockquote class="testimonial__quote">
+                      <p>{{ block.settings.testimonial_text }}</p>
+                    </blockquote>
+                  {%- endunless -%}
+
+                  <div class="testimonial__author">
+                    {%- if block.settings.customer_image != blank -%}
+                      <div class="testimonial__image">
+                        {{
+                          block.settings.customer_image
+                          | image_url: width: 120
+                          | image_tag: loading: 'lazy', alt: block.settings.customer_name, widths: '60, 120, 180'
+                        }}
+                      </div>
+                    {%- endif -%}
+
+                    <div class="testimonial__details">
+                      {%- unless block.settings.customer_name == blank -%}
+                        <cite class="testimonial__name">{{ block.settings.customer_name }}</cite>
+                      {%- endunless -%}
+
+                      {%- unless block.settings.customer_title == blank -%}
+                        <p class="testimonial__title">{{ block.settings.customer_title }}</p>
+                      {%- endunless -%}
+
+                      {%- unless block.settings.testimonial_date == blank -%}
+                        <time class="testimonial__date" datetime="{{ block.settings.testimonial_date }}">
+                          {{ block.settings.testimonial_date | date: '%B %d, %Y' }}
+                        </time>
+                      {%- endunless -%}
+                    </div>
+                  </div>
+                </div>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     </div>
 
     {%- if section.blocks.size == 0 -%}
@@ -92,6 +158,108 @@
     {%- endif -%}
   </div>
 </div>
+
+<script>
+  $(document).ready(function () {
+    // Initialize Owl Carousel for testimonials
+    $('.testimonials-carousel').owlCarousel({
+      items: 3,
+      loop: true,
+      margin: 30,
+      nav: true,
+      dots: true,
+      autoplay: true,
+      autoplayTimeout: 5000,
+      autoplayHoverPause: true,
+      autoHeight: false,
+      navText: [
+        '<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"/></svg>',
+        '<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"/></svg>',
+      ],
+      responsive: {
+        0: {
+          items: 1,
+          margin: 15,
+        },
+        768: {
+          items: 2,
+          margin: 20,
+        },
+        1000: {
+          items: (function () {
+            var columns = $('.testimonials-carousel').data('columns');
+            return Math.min(columns || 3, 4);
+          })(),
+          margin: 30,
+        },
+      },
+      onInitialized: function (event) {
+        // Ensure equal heights after initialization
+        var $carousel = $(event.target);
+        equalizeHeights($carousel);
+        updateDots($carousel);
+      },
+      onResized: function (event) {
+        // Re-equalize heights on resize
+        var $carousel = $(event.target);
+        setTimeout(function () {
+          equalizeHeights($carousel);
+          updateDots($carousel);
+        }, 100);
+      },
+      onChanged: function (event) {
+        // Update dots when slide changes
+        var $carousel = $(event.target);
+        updateDots($carousel);
+      },
+    });
+
+    // Function to equalize heights
+    function equalizeHeights($carousel) {
+      $carousel.find('.owl-item').css('height', 'auto');
+      $carousel.find('.testimonial-card').css('height', 'auto');
+
+      var maxHeight = 0;
+      $carousel.find('.owl-item.active .testimonial-card').each(function () {
+        var cardHeight = $(this).outerHeight();
+        maxHeight = Math.max(maxHeight, cardHeight);
+      });
+
+      if (maxHeight > 0) {
+        $carousel.find('.owl-item .testimonial-card').css('height', maxHeight + 'px');
+      }
+    }
+
+    // Function to update dots based on current responsive settings
+    function updateDots($carousel) {
+      var owlData = $carousel.data('owl.carousel');
+      if (owlData) {
+        var totalItems = owlData._items.length;
+        var itemsPerSlide = owlData.settings.items;
+        var totalPages = Math.ceil(totalItems / itemsPerSlide);
+
+        // Get the actual current position considering loop
+        var currentPosition = owlData.relative(owlData.current());
+        var currentPage = Math.floor(currentPosition / itemsPerSlide);
+
+        // Ensure currentPage is within valid range
+        currentPage = currentPage % totalPages;
+        if (currentPage < 0) currentPage = totalPages + currentPage;
+
+        // Find dots container (could be sibling or within carousel)
+        var $dots = $carousel.find('.owl-dots .owl-dot');
+        if ($dots.length === 0) {
+          $dots = $carousel.siblings('.owl-dots').find('.owl-dot');
+        }
+
+        $dots.each(function (index) {
+          $(this).toggleClass('active', index === currentPage);
+          $(this).toggle(index < totalPages);
+        });
+      }
+    }
+  });
+</script>
 
 {% schema %}
 {
