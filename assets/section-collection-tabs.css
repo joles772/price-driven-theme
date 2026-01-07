@@ -123,8 +123,19 @@
   width: 100% !important;
   max-width: 100% !important;
   min-width: 100% !important;
-  margin: 0;
+  margin: 0 !important;
   direction: ltr;
+}
+
+/* Remove all margins from li elements in collection tabs */
+.collection-tabs-list li,
+.collection-tabs-list .collection-list__item,
+.collection-tabs-list .grid__item {
+  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 
 /* Remove ::before styles from card elements in collection tabs */
@@ -216,24 +227,38 @@
 /* Responsive Design */
 @media screen and (max-width: 749px) {
   .collection__navigation {
-    flex-direction: column;
-    gap: 0.5rem;
+    flex-direction: row;
+    gap: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    justify-content: flex-start;
+    padding-bottom: 2px;
+  }
+
+  .collection__navigation::-webkit-scrollbar {
+    display: none;
   }
 
   .navigation-item {
-    flex-direction: row;
+    flex-direction: column;
     padding: 0.75rem 1rem;
-    text-align: left;
-    justify-content: flex-start;
-    width: 100%;
+    text-align: center;
+    justify-content: center;
+    min-width: 120px;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 
   .navigation-item img {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
   }
 
   .navigation-item .tab-title {
-    text-align: left;
+    text-align: center;
+    font-size: 0.9rem;
   }
 }
