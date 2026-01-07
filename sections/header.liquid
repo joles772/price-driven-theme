@@ -53,15 +53,123 @@
     background-image: none !important;
   }
 
+  /* Header layout adjustments for inline search */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header__icons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
   /* Search input styling in header */
   .header-wrapper .search__input {
-    background-color: #333333 !important;
-    color: #cccccc !important;
-    border-color: #555555 !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #cccccc !important;
+    border-radius: 0 !important;
   }
 
   .header-wrapper .search__input::placeholder {
-    color: #999999 !important;
+    color: #666666 !important;
+  }
+
+  /* Inline header search styling */
+  .header__search {
+    flex: 1;
+    max-width: 300px;
+    margin: 0 2rem;
+  }
+
+  .header__search .search {
+    position: relative;
+  }
+
+  .header__search .field {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .header__search .search__input {
+    width: 100%;
+    padding: 0.75rem 3rem 0.75rem 1rem;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .header__search .search__input:focus {
+    outline: none;
+    border-color: #333333;
+    background-color: #ffffff;
+  }
+
+  .header__search .search__input::placeholder {
+    color: #666666;
+  }
+
+  .header__search .field__label {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+  }
+
+  .header__search .search__button {
+    position: absolute;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .header__search .search__button:hover {
+    color: #000000;
+  }
+
+  .header__search .search__button svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  /* Predictive search styling */
+  .header__search .predictive-search {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #000000;
+    border: 1px solid #555555;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    z-index: 1000;
+    display: none;
+  }
+
+  .header__search .predictive-search.predictive-search--open {
+    display: block;
+  }
+
+  /* Mobile responsive search */
+  @media screen and (max-width: 990px) {
+    .header__search {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .header__search {
+      display: none;
+    }
   }
 
   /* Cart notification styling */
@@ -178,6 +286,9 @@
 {%- endstyle -%}
 
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
+{%- if settings.predictive_search_enabled -%}
+  <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 
 {%- liquid
   for block in section.blocks
@@ -217,10 +328,6 @@
     {%- liquid
       if section.settings.menu != blank
         render 'header-drawer'
-      endif
-
-      if section.settings.logo_position == 'top-center' or section.settings.menu == blank
-        render 'header-search', input_id: 'Search-In-Modal-1'
       endif
     -%}
 
@@ -324,7 +431,61 @@
           </localization-form>
         {%- endif -%}
       </div>
-      {% render 'header-search', input_id: 'Search-In-Modal' %}
+
+      {%- comment -%} Inline Search Input {%- endcomment -%}
+      <div class="header__search">
+        <form action="{{ routes.search_url }}" method="get" role="search" class="search search--header">
+          <div class="field">
+            <input
+              class="search__input field__input"
+              id="Search-In-Header"
+              type="search"
+              name="q"
+              value="{{ search.terms | escape }}"
+              placeholder="{{ 'general.search.search' | t }}"
+              {%- if settings.predictive_search_enabled -%}
+                role="combobox"
+                aria-expanded="false"
+                aria-owns="predictive-search-results-list"
+                aria-controls="predictive-search-results-list"
+                aria-haspopup="listbox"
+                aria-autocomplete="list"
+                autocorrect="off"
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
+              {%- endif -%}
+            >
+            <label class="field__label" for="Search-In-Header">{{ 'general.search.search' | t }}</label>
+            <button type="submit" class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
+              <span class="svg-wrapper">
+                <svg viewBox="0 0 18 19" role="presentation" class="icon icon-search">
+                  <g stroke-width="2" style="stroke: #222222;" fill="none" fill-rule="evenodd">
+                    <path d="m7 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"></path>
+                    <path d="m15 16-4-4" stroke-linecap="round"></path>
+                  </g>
+                </svg>
+              </span>
+            </button>
+          </div>
+          {%- if settings.predictive_search_enabled -%}
+            <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
+              <div class="predictive-search__loading-state">
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  class="spinner"
+                  viewBox="0 0 66 66"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                </svg>
+              </div>
+            </div>
+            <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+          {%- endif -%}
+        </form>
+      </div>
 
       {%- if shop.customer_accounts_enabled -%}
         <a
@@ -501,6 +662,28 @@
   }
 
   customElements.define('sticky-header', StickyHeader);
+
+  // Inline search functionality
+  document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.querySelector('#Search-In-Header');
+    const predictiveSearch = document.querySelector('.predictive-search--header');
+
+    if (searchInput && predictiveSearch) {
+      searchInput.addEventListener('input', function () {
+        if (this.value.length > 0) {
+          predictiveSearch.classList.add('predictive-search--open');
+        } else {
+          predictiveSearch.classList.remove('predictive-search--open');
+        }
+      });
+
+      searchInput.addEventListener('blur', function () {
+        setTimeout(() => {
+          predictiveSearch.classList.remove('predictive-search--open');
+        }, 200);
+      });
+    }
+  });
 {% endjavascript %}
 
 <script type="application/ld+json">
