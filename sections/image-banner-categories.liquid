@@ -331,13 +331,13 @@
       if (pair.includes(':')) {
         const [parent, children] = pair.split(':');
         const childOptions = children.split(',').map((child) => child.trim());
-        optionsMap[parent.trim().toLowerCase()] = childOptions;
+        optionsMap[parent.trim()] = childOptions;
       }
     });
 
     // Function to update filter 2 based on filter 1 selection
     function updateFilter2() {
-      const selectedValue = filter1.value.toLowerCase();
+      const selectedValue = filter1.value;
 
       // Clear current options
       filter2.innerHTML = '';
@@ -359,8 +359,8 @@
       if (matchingOptions.length > 0) {
         matchingOptions.forEach((option) => {
           const optionElement = document.createElement('option');
-          optionElement.value = option.toLowerCase().replace(/\s+/g, '-');
-          optionElement.textContent = option.charAt(0).toUpperCase() + option.slice(1);
+          optionElement.value = option.trim();
+          optionElement.textContent = option.trim();
           filter2.appendChild(optionElement);
         });
         filter2.disabled = false;
@@ -385,17 +385,20 @@
 
       // Add filter 1 if selected
       if (filter1 && filter1.value) {
-        params.append('filter.v.m.custom.filter1', filter1.value.replace(/-/g, '+'));
+        const filter1Name = '{{ section.settings.filter_1_label | default: "filter1" | handleize }}';
+        params.append(`filter.v.m.custom.${filter1Name}`, filter1.value);
       }
 
       // Add filter 2 if selected
       if (filter2 && filter2.value && !filter2.disabled) {
-        params.append('filter.v.m.custom.filter2', filter2.value.replace(/-/g, '+'));
+        const filter2Name = '{{ section.settings.filter_2_label | default: "filter2" | handleize }}';
+        params.append(`filter.v.m.custom.${filter2Name}`, filter2.value);
       }
 
       // Add filter 3 if selected
       if (filter3 && filter3.value) {
-        params.append('filter.v.m.custom.filter3', filter3.value.replace(/-/g, '+'));
+        const filter3Name = '{{ section.settings.filter_3_label | default: "filter3" | handleize }}';
+        params.append(`filter.v.m.custom.${filter3Name}`, filter3.value);
       }
 
       // Construct final URL
@@ -557,7 +560,7 @@
                     {%- assign filter_1_options = section.settings.filter_1_tags | split: ',' -%}
                     {%- for option in filter_1_options -%}
                       {%- assign option_clean = option | strip -%}
-                      <option value="{{ option_clean | handleize }}">{{ option_clean | capitalize }}</option>
+                      <option value="{{ option_clean }}">{{ option_clean }}</option>
                     {%- endfor -%}
                   </select>
                 </div>
@@ -584,7 +587,7 @@
                     {%- assign filter_3_options = section.settings.filter_3_tags | split: ',' -%}
                     {%- for option in filter_3_options -%}
                       {%- assign option_clean = option | strip -%}
-                      <option value="{{ option_clean | handleize }}">{{ option_clean | capitalize }}</option>
+                      <option value="{{ option_clean }}">{{ option_clean }}</option>
                     {%- endfor -%}
                   </select>
                 </div>
