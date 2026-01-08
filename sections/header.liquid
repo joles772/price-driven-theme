@@ -44,7 +44,7 @@
   .header-wrapper .header__menu-item:hover,
   .header-wrapper .list-menu__item:hover,
   .header-wrapper a:hover {
-    color: #ffffff !important;
+    color: #F9FAFB !important;
   }
 
   /* Override any gradient backgrounds */
@@ -57,25 +57,20 @@
   .header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 2rem;
   }
 
   .header__icons {
     display: flex;
     align-items: center;
     gap: 1rem;
-  }
-
-  /* Search input styling in header */
-  .header-wrapper .search__input {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    border-color: #cccccc !important;
-    border-radius: 0 !important;
+    margin-left: auto;
   }
 
   .header-wrapper .search__input::placeholder {
-    color: #666666 !important;
+    color: #888888 !important;
+    opacity: 1 !important;
   }
 
   /* Inline header search styling */
@@ -99,21 +94,26 @@
     width: 100%;
     padding: 0.75rem 3rem 0.75rem 1rem;
     border: 1px solid #cccccc;
-    border-radius: 4px;
-    background-color: #ffffff;
-    color: #000000;
-    font-size: 1rem;
+    border-radius: 50px;
+    background-color: #F9FAFB;
+    color: #000000 !important;
+    font-size: 1.2rem;
     transition: all 0.3s ease;
+    padding-left: 24px !important;
+    padding-right: 34px !important;
+    min-width: 224px
+
   }
 
   .header__search .search__input:focus {
     outline: none;
     border-color: #333333;
-    background-color: #ffffff;
+    background-color: #F9FAFB;
   }
 
   .header__search .search__input::placeholder {
-    color: #666666;
+    color: #888888 !important;
+    opacity: 1 !important;
   }
 
   .header__search .field__label {
@@ -141,33 +141,53 @@
     height: 1.25rem;
   }
 
-  /* Predictive search styling */
-  .header__search .predictive-search {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: #000000;
-    border: 1px solid #555555;
-    border-top: none;
-    border-radius: 0 0 4px 4px;
-    z-index: 1000;
-    display: none;
+  /* Mobile search in drawer */
+  .menu-drawer .header__search {
+    padding: 1rem;
+    border-bottom: 1px solid #333333;
+    margin: 0;
+    max-width: none;
+    width: 100%;
   }
 
-  .header__search .predictive-search.predictive-search--open {
-    display: block;
+  .menu-drawer .header__search .search {
+    width: 100%;
+  }
+
+  .menu-drawer .header__search .field {
+    width: 100%;
+  }
+
+  .menu-drawer .header__search .search__input {
+    background-color: #F9FAFB !important;
+    color: #000000 !important;
+    border-color: #cccccc !important;
+    border-radius: 50px !important;
+    width: 100%;
+  }
+
+  .menu-drawer .header__search .search__input::placeholder {
+    color: #888888 !important;
+    opacity: 1 !important;
+  }
+
+  .menu-drawer .header__search .search__button {
+    color: #666666;
+  }
+
+  .menu-drawer .header__search .search__button:hover {
+    color: #000000;
   }
 
   /* Mobile responsive search */
   @media screen and (max-width: 990px) {
-    .header__search {
+    .header__icons .header__search {
       display: none;
     }
   }
 
   @media screen and (max-width: 749px) {
-    .header__search {
+    .header__icons .header__search {
       display: none;
     }
   }
@@ -198,7 +218,7 @@
   .menu-drawer .menu-drawer__menu-item:hover,
   .menu-drawer .list-menu__item:hover,
   .menu-drawer a:hover {
-    color: #ffffff !important;
+    color: #F9FAFB !important;
   }
 
   .menu-drawer .menu-drawer__submenu {
@@ -442,19 +462,7 @@
               type="search"
               name="q"
               value="{{ search.terms | escape }}"
-              placeholder="{{ 'general.search.search' | t }}"
-              {%- if settings.predictive_search_enabled -%}
-                role="combobox"
-                aria-expanded="false"
-                aria-owns="predictive-search-results-list"
-                aria-controls="predictive-search-results-list"
-                aria-haspopup="listbox"
-                aria-autocomplete="list"
-                autocorrect="off"
-                autocomplete="off"
-                autocapitalize="off"
-                spellcheck="false"
-              {%- endif -%}
+              placeholder="Search Discount Reports..."
             >
             <label class="field__label" for="Search-In-Header">{{ 'general.search.search' | t }}</label>
             <button type="submit" class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
@@ -468,22 +476,6 @@
               </span>
             </button>
           </div>
-          {%- if settings.predictive_search_enabled -%}
-            <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
-              <div class="predictive-search__loading-state">
-                <svg
-                  aria-hidden="true"
-                  focusable="false"
-                  class="spinner"
-                  viewBox="0 0 66 66"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
-                </svg>
-              </div>
-            </div>
-            <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
-          {%- endif -%}
         </form>
       </div>
 
@@ -662,28 +654,6 @@
   }
 
   customElements.define('sticky-header', StickyHeader);
-
-  // Inline search functionality
-  document.addEventListener('DOMContentLoaded', function () {
-    const searchInput = document.querySelector('#Search-In-Header');
-    const predictiveSearch = document.querySelector('.predictive-search--header');
-
-    if (searchInput && predictiveSearch) {
-      searchInput.addEventListener('input', function () {
-        if (this.value.length > 0) {
-          predictiveSearch.classList.add('predictive-search--open');
-        } else {
-          predictiveSearch.classList.remove('predictive-search--open');
-        }
-      });
-
-      searchInput.addEventListener('blur', function () {
-        setTimeout(() => {
-          predictiveSearch.classList.remove('predictive-search--open');
-        }, 200);
-      });
-    }
-  });
 {% endjavascript %}
 
 <script type="application/ld+json">

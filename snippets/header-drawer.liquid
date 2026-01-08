@@ -18,6 +18,33 @@
     </summary>
     <div id="menu-drawer" class="gradient menu-drawer motion-reduce color-{{ section.settings.menu_color_scheme }}">
       <div class="menu-drawer__inner-container">
+        {%- comment -%} Mobile Search Form {%- endcomment -%}
+        <div class="header__search">
+          <form action="{{ routes.search_url }}" method="get" role="search" class="search search--header">
+            <div class="field">
+              <input
+                class="search__input field__input"
+                id="Search-In-Drawer"
+                type="search"
+                name="q"
+                value="{{ search.terms | escape }}"
+                placeholder="Search Discount Reports..."
+              >
+              <label class="field__label" for="Search-In-Drawer">{{ 'general.search.search' | t }}</label>
+              <button type="submit" class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
+                <span class="svg-wrapper">
+                  <svg viewBox="0 0 18 19" role="presentation" class="icon icon-search">
+                    <g stroke-width="2" style="stroke: #222222;" fill="none" fill-rule="evenodd">
+                      <path d="m7 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"></path>
+                      <path d="m15 16-4-4" stroke-linecap="round"></path>
+                    </g>
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+
         <div class="menu-drawer__navigation-container">
           <nav class="menu-drawer__navigation">
             <ul class="menu-drawer__menu has-submenu list-menu" role="list">
