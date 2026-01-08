@@ -142,12 +142,29 @@
   }
 
   /* Mobile search in drawer */
-  .menu-drawer .header__search {
+  .menu-drawer .header__search--mobile-only {
     padding: 1rem;
     border-bottom: 1px solid #333333;
     margin: 0;
     max-width: none;
     width: 100%;
+    display: none !important; /* Force hide by default on all screens */
+  }
+
+  /* Show mobile search only on mobile devices */
+  @media screen and (max-width: 990px) {
+    .menu-drawer .header__search--mobile-only {
+      display: block !important;
+    }
+  }
+
+  /* Additional specificity to ensure it's hidden on desktop */
+  @media screen and (min-width: 991px) {
+    .menu-drawer .header__search--mobile-only,
+    .menu-drawer .header__search.header__search--mobile-only {
+      display: none !important;
+      visibility: hidden !important;
+    }
   }
 
   .menu-drawer .header__search .search {
