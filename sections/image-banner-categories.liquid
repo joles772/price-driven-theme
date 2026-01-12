@@ -319,62 +319,6 @@
     const filter1 = form.querySelector('#filter-1-{{ section.id }}');
     const filter2 = form.querySelector('#filter-2-{{ section.id }}');
     const filter3 = form.querySelector('#filter-3-{{ section.id }}');
-    const dependentOptions = form.getAttribute('data-dependent-options');
-
-    if (!filter1 || !filter2 || !dependentOptions) return;
-
-    // Parse dependent options from format: "parent1:child1,child2|parent2:child1,child2"
-    const optionsMap = {};
-    const pairs = dependentOptions.split('|');
-
-    pairs.forEach((pair) => {
-      if (pair.includes(':')) {
-        const [parent, children] = pair.split(':');
-        const childOptions = children.split(',').map((child) => child.trim());
-        optionsMap[parent.trim()] = childOptions;
-      }
-    });
-
-    // Function to update filter 2 based on filter 1 selection
-    function updateFilter2() {
-      const selectedValue = filter1.value;
-
-      // Clear current options
-      filter2.innerHTML = '';
-
-      if (!selectedValue) {
-        // No selection in filter 1
-        filter2.innerHTML =
-          '<option value="">Select {{ section.settings.filter_1_label | default: "Filter 1" }} first</option>';
-        filter2.disabled = true;
-        return;
-      }
-
-      // Add default "All" option
-      filter2.innerHTML = '<option value="">All {{ section.settings.filter_2_label | default: "Options" }}</option>';
-
-      // Find matching options for selected parent
-      const matchingOptions = optionsMap[selectedValue] || [];
-
-      if (matchingOptions.length > 0) {
-        matchingOptions.forEach((option) => {
-          const optionElement = document.createElement('option');
-          optionElement.value = option.trim();
-          optionElement.textContent = option.trim();
-          filter2.appendChild(optionElement);
-        });
-        filter2.disabled = false;
-      } else {
-        filter2.innerHTML += '<option value="">No options available</option>';
-        filter2.disabled = true;
-      }
-    }
-
-    // Listen for changes in filter 1
-    filter1.addEventListener('change', updateFilter2);
-
-    // Initialize filter 2 on page load
-    updateFilter2();
 
     // Handle form submission
     form.addEventListener('submit', function (e) {
@@ -385,20 +329,77 @@
 
       // Add filter 1 if selected
       if (filter1 && filter1.value) {
-        const filter1Name = '{{ section.settings.filter_1_label | default: "filter1" | handleize }}';
-        params.append(`filter.v.m.custom.${filter1Name}`, filter1.value);
+        const filter1Type = '{{ section.settings.filter_1_type }}';
+        switch (filter1Type) {
+          case 'product_type':
+            params.append('filter.p.product_type', filter1.value);
+            break;
+          case 'vendor':
+            params.append('filter.p.vendor', filter1.value);
+            break;
+          case 'tags':
+            params.append('filter.p.tag', filter1.value);
+            break;
+          case 'metafield':
+            const filter1Namespace = '{{ section.settings.filter_1_metafield_namespace }}';
+            const filter1Key = '{{ section.settings.filter_1_metafield_key }}';
+            if (filter1Namespace && filter1Key) {
+              params.append(`filter.v.m.${filter1Namespace}.${filter1Key}`, filter1.value);
+            }
+            break;
+          default:
+            params.append('filter.p.tag', filter1.value);
+        }
       }
 
       // Add filter 2 if selected
-      if (filter2 && filter2.value && !filter2.disabled) {
-        const filter2Name = '{{ section.settings.filter_2_label | default: "filter2" | handleize }}';
-        params.append(`filter.v.m.custom.${filter2Name}`, filter2.value);
+      if (filter2 && filter2.value) {
+        const filter2Type = '{{ section.settings.filter_2_type }}';
+        switch (filter2Type) {
+          case 'product_type':
+            params.append('filter.p.product_type', filter2.value);
+            break;
+          case 'vendor':
+            params.append('filter.p.vendor', filter2.value);
+            break;
+          case 'tags':
+            params.append('filter.p.tag', filter2.value);
+            break;
+          case 'metafield':
+            const filter2Namespace = '{{ section.settings.filter_2_metafield_namespace }}';
+            const filter2Key = '{{ section.settings.filter_2_metafield_key }}';
+            if (filter2Namespace && filter2Key) {
+              params.append(`filter.v.m.${filter2Namespace}.${filter2Key}`, filter2.value);
+            }
+            break;
+          default:
+            params.append('filter.p.tag', filter2.value);
+        }
       }
 
       // Add filter 3 if selected
       if (filter3 && filter3.value) {
-        const filter3Name = '{{ section.settings.filter_3_label | default: "filter3" | handleize }}';
-        params.append(`filter.v.m.custom.${filter3Name}`, filter3.value);
+        const filter3Type = '{{ section.settings.filter_3_type }}';
+        switch (filter3Type) {
+          case 'product_type':
+            params.append('filter.p.product_type', filter3.value);
+            break;
+          case 'vendor':
+            params.append('filter.p.vendor', filter3.value);
+            break;
+          case 'tags':
+            params.append('filter.p.tag', filter3.value);
+            break;
+          case 'metafield':
+            const filter3Namespace = '{{ section.settings.filter_3_metafield_namespace }}';
+            const filter3Key = '{{ section.settings.filter_3_metafield_key }}';
+            if (filter3Namespace && filter3Key) {
+              params.append(`filter.v.m.${filter3Namespace}.${filter3Key}`, filter3.value);
+            }
+            break;
+          default:
+            params.append('filter.p.tag', filter3.value);
+        }
       }
 
       // Construct final URL
@@ -540,55 +541,183 @@
       {%- endfor -%}
 
       {%- comment -%} Product Filter Form {%- endcomment -%}
-      {%- if section.settings.filter_1_tags != blank
-        or section.settings.filter_2_tags != blank
-        or section.settings.filter_3_tags != blank
+      {%- if section.settings.filter_1_type != blank
+        or section.settings.filter_2_type != blank
+        or section.settings.filter_3_type != blank
       -%}
         <div class="banner__filters">
-          <form
-            class="product-filter-form"
-            data-dependent-options="{{ section.settings.filter_2_tags | escape }}"
-          >
+          <form class="product-filter-form">
             <div class="filter-controls">
-              {%- if section.settings.filter_1_tags != blank -%}
+              {%- if section.settings.filter_1_type != blank -%}
                 <div class="filter-item">
                   <label for="filter-1-{{ section.id }}" class="filter-label">
                     {{ section.settings.filter_1_label | default: 'Filter 1' }}
                   </label>
                   <select id="filter-1-{{ section.id }}" name="filter1" class="filter-select">
                     <option value="">All {{ section.settings.filter_1_label | default: 'Options' }}</option>
-                    {%- assign filter_1_options = section.settings.filter_1_tags | split: ',' -%}
-                    {%- for option in filter_1_options -%}
-                      {%- assign option_clean = option | strip -%}
-                      <option value="{{ option_clean }}">{{ option_clean }}</option>
-                    {%- endfor -%}
+                    {%- case section.settings.filter_1_type -%}
+                      {%- when 'product_type' -%}
+                        {%- assign product_types = collections.all.products | map: 'product_type' | uniq | sort -%}
+                        {%- for product_type in product_types -%}
+                          {%- if product_type != blank -%}
+                            <option value="{{ product_type }}">{{ product_type }}</option>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      {%- when 'vendor' -%}
+                        {%- assign vendors = collections.all.products | map: 'vendor' | uniq | sort -%}
+                        {%- for vendor in vendors -%}
+                          {%- if vendor != blank -%}
+                            <option value="{{ vendor }}">{{ vendor }}</option>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      {%- when 'tags' -%}
+                        {%- assign all_tags = collections.all.products | map: 'tags' | join: ',' | split: ',' | uniq | sort -%}
+                        {%- for tag in all_tags -%}
+                          {%- assign tag_clean = tag | strip -%}
+                          {%- if tag_clean != blank -%}
+                            <option value="{{ tag_clean }}">{{ tag_clean }}</option>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      {%- when 'metafield' -%}
+                        {%- if section.settings.filter_1_metafield_namespace != blank and section.settings.filter_1_metafield_key != blank -%}
+                          {%- assign metafield_values = '' -%}
+                          {%- for product in collections.all.products limit: 250 -%}
+                            {%- assign metafield_value = product.metafields[section.settings.filter_1_metafield_namespace][section.settings.filter_1_metafield_key] -%}
+                            {%- if metafield_value != blank -%}
+                              {%- assign value_string = metafield_value | strip -%}
+                              {%- unless metafield_values contains value_string -%}
+                                {%- if metafield_values == blank -%}
+                                  {%- assign metafield_values = value_string -%}
+                                {%- else -%}
+                                  {%- assign metafield_values = metafield_values | append: '||' | append: value_string -%}
+                                {%- endif -%}
+                              {%- endunless -%}
+                            {%- endif -%}
+                          {%- endfor -%}
+                          {%- if metafield_values != blank -%}
+                            {%- assign sorted_metafields = metafield_values | split: '||' | sort -%}
+                            {%- for metafield_option in sorted_metafields -%}
+                              <option value="{{ metafield_option }}">{{ metafield_option }}</option>
+                            {%- endfor -%}
+                          {%- endif -%}
+                        {%- endif -%}
+                    {%- endcase -%}
                   </select>
                 </div>
               {%- endif -%}
 
-              {%- if section.settings.filter_2_tags != blank -%}
+              {%- if section.settings.filter_2_type != blank -%}
                 <div class="filter-item">
                   <label for="filter-2-{{ section.id }}" class="filter-label">
                     {{ section.settings.filter_2_label | default: 'Filter 2' }}
                   </label>
-                  <select id="filter-2-{{ section.id }}" name="filter2" class="filter-select" disabled>
-                    <option value="">Select {{ section.settings.filter_1_label | default: 'Filter 1' }} first</option>
+                  <select id="filter-2-{{ section.id }}" name="filter2" class="filter-select">
+                    <option value="">All {{ section.settings.filter_2_label | default: 'Options' }}</option>
+                    {%- case section.settings.filter_2_type -%}
+                      {%- when 'product_type' -%}
+                        {%- assign product_types = collections.all.products | map: 'product_type' | uniq | sort -%}
+                        {%- for product_type in product_types -%}
+                          {%- if product_type != blank -%}
+                            <option value="{{ product_type }}">{{ product_type }}</option>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      {%- when 'vendor' -%}
+                        {%- assign vendors = collections.all.products | map: 'vendor' | uniq | sort -%}
+                        {%- for vendor in vendors -%}
+                          {%- if vendor != blank -%}
+                            <option value="{{ vendor }}">{{ vendor }}</option>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      {%- when 'tags' -%}
+                        {%- assign all_tags = collections.all.products | map: 'tags' | join: ',' | split: ',' | uniq | sort -%}
+                        {%- for tag in all_tags -%}
+                          {%- assign tag_clean = tag | strip -%}
+                          {%- if tag_clean != blank -%}
+                            <option value="{{ tag_clean }}">{{ tag_clean }}</option>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      {%- when 'metafield' -%}
+                        {%- if section.settings.filter_2_metafield_namespace != blank and section.settings.filter_2_metafield_key != blank -%}
+                          {%- assign metafield_values = '' -%}
+                          {%- for product in collections.all.products limit: 250 -%}
+                            {%- assign metafield_value = product.metafields[section.settings.filter_2_metafield_namespace][section.settings.filter_2_metafield_key] -%}
+                            {%- if metafield_value != blank -%}
+                              {%- assign value_string = metafield_value | strip -%}
+                              {%- unless metafield_values contains value_string -%}
+                                {%- if metafield_values == blank -%}
+                                  {%- assign metafield_values = value_string -%}
+                                {%- else -%}
+                                  {%- assign metafield_values = metafield_values | append: '||' | append: value_string -%}
+                                {%- endif -%}
+                              {%- endunless -%}
+                            {%- endif -%}
+                          {%- endfor -%}
+                          {%- if metafield_values != blank -%}
+                            {%- assign sorted_metafields = metafield_values | split: '||' | sort -%}
+                            {%- for metafield_option in sorted_metafields -%}
+                              <option value="{{ metafield_option }}">{{ metafield_option }}</option>
+                            {%- endfor -%}
+                          {%- endif -%}
+                        {%- endif -%}
+                    {%- endcase -%}
                   </select>
                 </div>
               {%- endif -%}
 
-              {%- if section.settings.filter_3_tags != blank -%}
+              {%- if section.settings.filter_3_type != blank -%}
                 <div class="filter-item">
                   <label for="filter-3-{{ section.id }}" class="filter-label">
                     {{ section.settings.filter_3_label | default: 'Filter 3' }}
                   </label>
                   <select id="filter-3-{{ section.id }}" name="filter3" class="filter-select">
                     <option value="">All {{ section.settings.filter_3_label | default: 'Options' }}</option>
-                    {%- assign filter_3_options = section.settings.filter_3_tags | split: ',' -%}
-                    {%- for option in filter_3_options -%}
-                      {%- assign option_clean = option | strip -%}
-                      <option value="{{ option_clean }}">{{ option_clean }}</option>
-                    {%- endfor -%}
+                    {%- case section.settings.filter_3_type -%}
+                      {%- when 'product_type' -%}
+                        {%- assign product_types = collections.all.products | map: 'product_type' | uniq | sort -%}
+                        {%- for product_type in product_types -%}
+                          {%- if product_type != blank -%}
+                            <option value="{{ product_type }}">{{ product_type }}</option>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      {%- when 'vendor' -%}
+                        {%- assign vendors = collections.all.products | map: 'vendor' | uniq | sort -%}
+                        {%- for vendor in vendors -%}
+                          {%- if vendor != blank -%}
+                            <option value="{{ vendor }}">{{ vendor }}</option>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      {%- when 'tags' -%}
+                        {%- assign all_tags = collections.all.products | map: 'tags' | join: ',' | split: ',' | uniq | sort -%}
+                        {%- for tag in all_tags -%}
+                          {%- assign tag_clean = tag | strip -%}
+                          {%- if tag_clean != blank -%}
+                            <option value="{{ tag_clean }}">{{ tag_clean }}</option>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      {%- when 'metafield' -%}
+                        {%- if section.settings.filter_3_metafield_namespace != blank and section.settings.filter_3_metafield_key != blank -%}
+                          {%- assign metafield_values = '' -%}
+                          {%- for product in collections.all.products limit: 250 -%}
+                            {%- assign metafield_value = product.metafields[section.settings.filter_3_metafield_namespace][section.settings.filter_3_metafield_key] -%}
+                            {%- if metafield_value != blank -%}
+                              {%- assign value_string = metafield_value | strip -%}
+                              {%- unless metafield_values contains value_string -%}
+                                {%- if metafield_values == blank -%}
+                                  {%- assign metafield_values = value_string -%}
+                                {%- else -%}
+                                  {%- assign metafield_values = metafield_values | append: '||' | append: value_string -%}
+                                {%- endif -%}
+                              {%- endunless -%}
+                            {%- endif -%}
+                          {%- endfor -%}
+                          {%- if metafield_values != blank -%}
+                            {%- assign sorted_metafields = metafield_values | split: '||' | sort -%}
+                            {%- for metafield_option in sorted_metafields -%}
+                              <option value="{{ metafield_option }}">{{ metafield_option }}</option>
+                            {%- endfor -%}
+                          {%- endif -%}
+                        {%- endif -%}
+                    {%- endcase -%}
                   </select>
                 </div>
               {%- endif -%}
@@ -715,39 +844,147 @@
       "info": "Label for the first filter dropdown"
     },
     {
+      "type": "select",
+      "id": "filter_1_type",
+      "label": "Filter 1 Type",
+      "options": [
+        {
+          "value": "",
+          "label": "Disabled"
+        },
+        {
+          "value": "product_type",
+          "label": "Product Type"
+        },
+        {
+          "value": "vendor",
+          "label": "Vendor/Brand"
+        },
+        {
+          "value": "tags",
+          "label": "Product Tags"
+        },
+        {
+          "value": "metafield",
+          "label": "Product Metafield"
+        }
+      ],
+      "default": "product_type",
+      "info": "Select the type of filter for the first dropdown"
+    },
+    {
       "type": "text",
-      "id": "filter_1_tags",
-      "label": "Filter 1 Tags",
-      "placeholder": "new, sale, featured",
-      "info": "Comma-separated list of tags for first filter"
+      "id": "filter_1_metafield_namespace",
+      "label": "Filter 1 Metafield Namespace",
+      "default": "custom",
+      "info": "Enter the metafield namespace (only used when Metafield is selected above)"
+    },
+    {
+      "type": "text",
+      "id": "filter_1_metafield_key",
+      "label": "Filter 1 Metafield Key",
+      "placeholder": "category",
+      "info": "Enter the metafield key (only used when Metafield is selected above)"
     },
     {
       "type": "text",
       "id": "filter_2_label",
       "label": "Filter 2 Label",
-      "default": "Price Range",
+      "default": "Brand",
       "info": "Label for the second filter dropdown"
     },
     {
-      "type": "textarea",
-      "id": "filter_2_tags",
-      "label": "Filter 2 Dependent Tags",
-      "placeholder": "toyota:camry,corolla,prius|honda:civic,accord,pilot|ford:f150,mustang,explorer",
-      "info": "Format: parent1:child1,child2,child3|parent2:child1,child2|parent3:child1,child2"
+      "type": "select",
+      "id": "filter_2_type",
+      "label": "Filter 2 Type",
+      "options": [
+        {
+          "value": "",
+          "label": "Disabled"
+        },
+        {
+          "value": "product_type",
+          "label": "Product Type"
+        },
+        {
+          "value": "vendor",
+          "label": "Vendor/Brand"
+        },
+        {
+          "value": "tags",
+          "label": "Product Tags"
+        },
+        {
+          "value": "metafield",
+          "label": "Product Metafield"
+        }
+      ],
+      "default": "vendor",
+      "info": "Select the type of filter for the second dropdown"
+    },
+    {
+      "type": "text",
+      "id": "filter_2_metafield_namespace",
+      "label": "Filter 2 Metafield Namespace",
+      "default": "custom",
+      "info": "Enter the metafield namespace (only used when Metafield is selected above)"
+    },
+    {
+      "type": "text",
+      "id": "filter_2_metafield_key",
+      "label": "Filter 2 Metafield Key",
+      "placeholder": "size",
+      "info": "Enter the metafield key (only used when Metafield is selected above)"
     },
     {
       "type": "text",
       "id": "filter_3_label",
       "label": "Filter 3 Label",
-      "default": "Brand",
+      "default": "Tags",
       "info": "Label for the third filter dropdown"
     },
     {
+      "type": "select",
+      "id": "filter_3_type",
+      "label": "Filter 3 Type",
+      "options": [
+        {
+          "value": "",
+          "label": "Disabled"
+        },
+        {
+          "value": "product_type",
+          "label": "Product Type"
+        },
+        {
+          "value": "vendor",
+          "label": "Vendor/Brand"
+        },
+        {
+          "value": "tags",
+          "label": "Product Tags"
+        },
+        {
+          "value": "metafield",
+          "label": "Product Metafield"
+        }
+      ],
+      "default": "tags",
+      "info": "Select the type of filter for the third dropdown"
+    },
+    {
       "type": "text",
-      "id": "filter_3_tags",
-      "label": "Filter 3 Tags",
-      "placeholder": "nike, adidas, puma",
-      "info": "Comma-separated list of tags for third filter"
+      "id": "filter_3_metafield_namespace",
+      "label": "Filter 3 Metafield Namespace",
+      "default": "custom",
+      "info": "Enter the metafield namespace (only used when Metafield is selected above)"
+    },
+    {
+      "type": "text",
+      "id": "filter_3_metafield_key",
+      "label": "Filter 3 Metafield Key",
+      "placeholder": "color",
+      "info": "Enter the metafield key (only used when Metafield is selected above)"
     },
     {
       "type": "url",
