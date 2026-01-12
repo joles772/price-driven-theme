@@ -220,61 +220,6 @@
         "padding_bottom": 36
       }
     },
-    "image_banner_categories_y8axkJ": {
-      "type": "image-banner-categories",
-      "blocks": {
-        "heading_QywqrU": {
-          "type": "heading",
-          "settings": {
-            "heading": "Image banner",
-            "heading_size": "h1"
-          }
-        },
-        "text_6CdDBJ": {
-          "type": "text",
-          "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
-          }
-        },
-        "buttons_HL8nyi": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Button label",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "Button label",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_QywqrU",
-        "text_6CdDBJ",
-        "buttons_HL8nyi"
-      ],
-      "name": "t:sections.image-banner.presets.name",
-      "settings": {
-        "image_overlay_opacity": 0,
-        "image_height": "medium",
-        "image_behavior": "none",
-        "filter_1_label": "Make",
-        "filter_1_tags": "Toyota,Chrysler",
-        "filter_2_label": "Model",
-        "filter_2_tags": "Toyota:Camry,Corolla,Sienna,RAV4|Chrysler:Pacifica",
-        "filter_3_label": "Year",
-        "filter_3_tags": "2018,2019,2020,2021,2022",
-        "filter_results_url": "shopify://collections/all",
-        "desktop_content_position": "middle-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": true,
-        "color_scheme": "",
-        "stack_images_on_mobile": true,
-        "mobile_content_alignment": "center",
-        "show_text_below": true
-      }
-    }
   },
   "order": [
     "image_banner",
@@ -283,6 +228,5 @@
     "collage",
     "video",
     "multicolumn",
-    "image_banner_categories_y8axkJ"
   ]
 }
