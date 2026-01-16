@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   margin-bottom: 3rem;
-  border-bottom: 2px solid #f0f0f0;
+  border-bottom: 2px solid rgba(var(--color-foreground), 0.1);
   padding: 0;
   list-style: none;
   gap: 0;
@@ -17,7 +17,7 @@
   padding: 1rem 2rem;
   font-size: 1.1rem;
   font-weight: 600;
-  color: #666;
+  color: rgba(var(--color-foreground), 0.7);
   cursor: pointer;
   border-bottom: 3px solid transparent;
   transition: all 0.3s ease;
@@ -32,12 +32,12 @@
 }
 
 .navigation-item:hover {
-  color: #9a0f39;
+  color: rgb(var(--color-button));
 }
 
 .navigation-item.active {
-  color: #9a0f39;
-  border-bottom-color: #9a0f39;
+  color: rgb(var(--color-button));
+  border-bottom-color: rgb(var(--color-button));
 }
 
 .navigation-item img {

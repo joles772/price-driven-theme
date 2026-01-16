@@ -3,11 +3,11 @@
 <style>
   #Banner-{{ section.id }} .banner__box {
     background: linear-gradient(360deg, #00000080, #0000000d) !important;
-    border: 2px solid rgba(255, 255, 255, 0.7) !important;
+    border: 1px solid rgba(245, 245, 245, 0.5) !important;
     border-radius: 0 !important;
     backdrop-filter: blur(10px) !important;
     padding: 2rem !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 8px 32px rgba(var(--color-foreground), 0.1) !important;
     max-width: 200px !important;
     position: absolute !important;
     {%- case section.settings.second_text_position -%}
@@ -34,13 +34,13 @@
   }
 
   #Banner-{{ section.id }} .banner__heading {
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+    text-shadow: 1px 1px 2px rgba(var(--color-foreground), 0.5) !important;
     font-size: 4rem !important;
     font-weight: bold !important;
   }
 
   #Banner-{{ section.id }} .banner__text {
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+    text-shadow: 1px 1px 2px rgba(var(--color-foreground), 0.5) !important;
   }
 
   #Banner-{{ section.id }} .banner__content {
@@ -77,7 +77,7 @@
   #Banner-{{ section.id }} .banner__second-text h3 {
     margin: 0 0 1rem 0;
     color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    text-shadow: 2px 2px 4px rgba(var(--color-foreground), 0.7);
     font-size: 4rem;
     font-weight: bold;
   }
@@ -87,13 +87,13 @@
   }
 
   #Banner-{{ section.id }} .button:after {
-    border: 1px solid #9a0f39 !important;
-    box-shadow: 0 0 0 calc(var(--buttons-border-width) + var(--border-offset)) rgba(154, 15, 57, 0.2), 0 0 0 var(--buttons-border-width) rgba(154, 15, 57, 1) !important;
+    border: 1px solid rgb(var(--color-button)) !important;
+    box-shadow: 0 0 0 calc(var(--buttons-border-width) + var(--border-offset)) rgba(var(--color-button), 0.2), 0 0 0 var(--buttons-border-width) rgba(var(--color-button), 1) !important;
   }
 
   #Banner-{{ section.id }} .banner__second-text .button:after {
-    border: 1px solid #ffffff !important;
-    box-shadow: 0 0 0 calc(var(--buttons-border-width) + var(--border-offset)) rgba(255, 255, 255, 0.2), 0 0 0 var(--buttons-border-width) rgba(255, 255, 255, 1) !important;
+    border: 1px solid rgb(var(--color-background)) !important;
+    box-shadow: 0 0 0 calc(var(--buttons-border-width) + var(--border-offset)) rgba(var(--color-background), 0.2), 0 0 0 var(--buttons-border-width) rgba(var(--color-background), 1) !important;
   }
 
   @media screen and (max-width: 749px) {
@@ -246,7 +246,7 @@
                     href="{{ block.settings.button_link_1 }}"
                   {% endif %}
                   class="button button--primary"
-                  style="background-color: #9a0f39; color: #ffffff; border: 1px solid #9a0f39;"
+                  style="background-color: rgb(var(--color-button)); color: rgb(var(--color-background)); border: 1px solid rgb(var(--color-button));"
                 >
                   {{- block.settings.button_label_1 | escape -}}
                 </a>

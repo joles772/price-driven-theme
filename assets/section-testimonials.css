@@ -160,7 +160,7 @@
 }
 
 .star.filled {
-    color: #fbbf24;
+    color: rgb(var(--color-button));
 }
 
 .star.empty {
@@ -479,7 +479,7 @@
     }
 
     .star.filled {
-        color: #000;
+        color: rgb(var(--color-foreground));
     }
 }
 
