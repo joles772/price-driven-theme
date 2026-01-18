@@ -103,14 +103,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Welcom to Price Driven",
+            "heading": "Welcome to Price Driven",
             "heading_size": "h1"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+            "text": "<p>Your one-stop destination for <strong>Vehicle Discount Reports</strong> and<strong> Professional Vehicle Negotiation Services</strong>.<br/><br/></p>"
           }
         }
       },
