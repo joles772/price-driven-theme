@@ -41,54 +41,10 @@
             "desktop_content_alignment": "center",
             "mobile_content_alignment": "center"
           }
-        },
-        "video_slide_9zfdjp": {
-          "type": "video_slide",
-          "settings": {
-            "image_overlay_opacity": 0,
-            "heading": "Image banner",
-            "heading_size": "h2",
-            "text": "<p>Give customers details about the banner image(s) or content on the template.</p>",
-            "text_size_block": "medium",
-            "button_label_1": "Button label",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "Button label",
-            "button_link_2": "",
-            "button_style_secondary_2": false,
-            "color_scheme": "",
-            "show_text_box": true,
-            "desktop_content_position": "middle-center",
-            "desktop_content_alignment": "center",
-            "mobile_content_alignment": "center"
-          }
-        },
-        "image_slide_dELXTN": {
-          "type": "image_slide",
-          "settings": {
-            "image_overlay_opacity": 0,
-            "heading": "Image banner",
-            "heading_size": "h2",
-            "text": "<p>Give customers details about the banner image(s) or content on the template.</p>",
-            "text_size_block": "medium",
-            "button_label_1": "Button label",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "Button label",
-            "button_link_2": "",
-            "button_style_secondary_2": false,
-            "color_scheme": "",
-            "show_text_box": true,
-            "desktop_content_position": "middle-center",
-            "desktop_content_alignment": "center",
-            "mobile_content_alignment": "center"
-          }
         }
       },
       "block_order": [
-        "filter_slide_HgKxE4",
-        "video_slide_9zfdjp",
-        "image_slide_dELXTN"
+        "filter_slide_HgKxE4"
       ],
       "name": "Image banner filter",
       "settings": {
