@@ -574,6 +574,8 @@
   text-align: center;
   margin: 0 0 1rem;
   opacity: 100% !important;
+  font-size: 32px;
+  margin-bottom: 18px;
 }
 
 .filter-form {
@@ -600,8 +602,9 @@
   min-width: 24rem;
   line-height: 1;
   font-size: 1.4rem;
-  color: rgba(var(--color-foreground), 1) !important;
-  border: 1px solid rgba(var(--color-foreground), 1);
+  color: rgba(var(--color-foreground), 0.8) !important;
+  border: 1px solid rgba(var(--color-foreground), 0.8);
+  background: rgba(var(--color-background), 1);
 }
 
 .filter__box summary span {
