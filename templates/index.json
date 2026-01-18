@@ -329,7 +329,7 @@
       "settings": {
         "show_background_image": true,
         "image": "shopify://shop_images/Lexus_IS.avif",
-        "image_overlay_opacity": 50,
+        "image_overlay_opacity": 60,
         "image_height": "medium",
         "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
