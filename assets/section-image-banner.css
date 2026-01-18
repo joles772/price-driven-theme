@@ -565,17 +565,25 @@
 .filter__box {
   padding: 4rem;
   width: 100%;
+  background: linear-gradient(360deg, #00000080, #0000000d) !important;
+  opacity: 1 !important;
+  border: 1px solid rgba(var(--color-foreground), 0.4);
 }
 
 .filter__box h3 {
   text-align: center;
   margin: 0 0 1rem;
+  opacity: 100% !important;
 }
 
 .filter-form {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
+}
+
+.filter-form * {
+  opacity: 100% !important;
 }
 
 .filter__box details {
@@ -592,6 +600,8 @@
   min-width: 24rem;
   line-height: 1;
   font-size: 1.4rem;
+  color: rgba(var(--color-foreground), 1) !important;
+  border: 1px solid rgba(var(--color-foreground), 1);
 }
 
 .filter__box summary span {
