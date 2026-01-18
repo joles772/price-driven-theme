@@ -190,6 +190,62 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "collection_tabs_3QGcfP": {
+      "type": "collection-tabs",
+      "blocks": {
+        "collection_list_yFnBRB": {
+          "type": "collection_list",
+          "settings": {
+            "collection": [],
+            "collection_title": "Collections"
+          }
+        },
+        "collection_list_Ubdbix": {
+          "type": "collection_list",
+          "settings": {
+            "collection": [],
+            "collection_title": "Collections"
+          }
+        },
+        "collection_list_KUKCdf": {
+          "type": "collection_list",
+          "settings": {
+            "collection": [],
+            "collection_title": "Collections"
+          }
+        }
+      },
+      "block_order": [
+        "collection_list_yFnBRB",
+        "collection_list_Ubdbix",
+        "collection_list_KUKCdf"
+      ],
+      "name": "Collection tabs",
+      "settings": {
+        "title": "Favorite collections",
+        "heading_alignment": "center",
+        "heading_size": "h2",
+        "description": "",
+        "text_size_block": "medium",
+        "tabs_font_size": "h6",
+        "tabs_font_weight": "fw-500",
+        "card_heading_size": "h4",
+        "image_ratio": "square",
+        "image_overlay_opacity": 0,
+        "reverse_card": false,
+        "product_image_ratio": "adapt",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "products_to_show": 8,
+        "color_scheme": "",
+        "columns_desktop": 3,
+        "columns_mobile": "1",
+        "padding_top": 70,
+        "padding_bottom": 70
+      }
     }
   },
   "order": [
@@ -197,6 +253,7 @@
     "rich_text",
     "rich_text_BGGcHB",
     "multirow_m3Tjtt",
-    "pricing_tier_table_HU7ANj"
+    "pricing_tier_table_HU7ANj",
+    "collection_tabs_3QGcfP"
   ]
 }
