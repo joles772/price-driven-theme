@@ -28,9 +28,9 @@
     background-color: rgb(var(--color-background)) !important;
   }
 
-  .header-wrapper * {
+  {% comment %} .header-wrapper * {
     color: rgba(var(--color-foreground), 0.8) !important;
-  }
+  } {% endcomment %}
 
   .header-wrapper .header__heading-link,
   .header-wrapper .header__menu-item,
@@ -106,12 +106,12 @@
 
   .header__search .search__input:focus {
     outline: none;
-    border-color: rgba(var(--color-foreground), 0.4);
+    border-color: rgba(0,0,0,0.8);
     background-color: #F5F5F5;
   }
 
   .header__search .search__input::placeholder {
-    color: rgba(var(--color-foreground), 0.5) !important;
+    color: rgba(0,0,0,0.8) !important;
     opacity: 1 !important;
   }
 
