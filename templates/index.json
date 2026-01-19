@@ -250,6 +250,7 @@
       "blocks": {
         "collection_list_yFnBRB": {
           "type": "collection_list",
+          "name": "A-B",
           "settings": {
             "collection": [
               "acura",
@@ -263,6 +264,7 @@
         },
         "collection_list_Ubdbix": {
           "type": "collection_list",
+          "name": "C-F",
           "settings": {
             "collection": [
               "cadillac",
@@ -277,6 +279,7 @@
         },
         "collection_list_KUKCdf": {
           "type": "collection_list",
+          "name": "G-J",
           "settings": {
             "collection": [
               "genesis",
@@ -292,8 +295,18 @@
         "collection_list_xeNE8c": {
           "type": "collection_list",
           "settings": {
-            "collection": [],
-            "collection_title": "Collections"
+            "collection": [
+              "kia",
+              "land-rover",
+              "lexus",
+              "lincoln",
+              "mazda",
+              "mercedes-benz",
+              "mini",
+              "mitsubishi",
+              "nissan"
+            ],
+            "collection_title": "K-N"
           }
         }
       },
