@@ -1,5 +1,12 @@
 {{ 'section-pricing-tier-table.css' | asset_url | stylesheet_tag }}
 
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+>
+
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -27,6 +34,10 @@
 
   .pricing-tier-section .subtitle-wrapper {
     text-align: center !important;
+  }
+
+  .pricing-tier-table {
+    margin-top: 3rem;
   }
 
   .pricing-tier {
@@ -188,29 +199,29 @@
 
   @media screen and (max-width: 749px) {
     .pricing-tier-table {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      gap: 0;
-      padding: 20px 0 0 0;
-      margin: 0;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
+      display: block;
       width: 100%;
+      overflow: hidden;
+      margin-top: 2rem;
     }
 
-    .pricing-tier-table::-webkit-scrollbar {
-      display: none;
+    .pricing-tier-table .owl-stage-outer {
+      overflow: hidden;
+      width: 100%;
+      padding-top: 1rem;
+      padding-bottom: 3rem;
+    }
+
+    .pricing-tier-table .owl-stage {
+      width: 100%;
     }
 
     .pricing-tier {
-      flex: 0 0 100%;
-      width: 100%;
-      min-width: 100%;
-      scroll-snap-align: start;
+      flex: none;
+      width: calc(100% - 20px);
+      min-width: calc(100% - 20px);
       padding: 1.5rem 1rem;
-      margin: 0;
+      margin: 0 10px;
       box-sizing: border-box;
     }
 
@@ -230,32 +241,43 @@
       font-size: 2.5rem;
     }
 
-    /* Mobile carousel indicators */
-    .pricing-tier-section .carousel-indicators {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-top: 2rem;
+    /* Owl Carousel Custom Styles */
+    .pricing-tier-section .owl-nav {
+      display: none !important;
     }
 
-    .pricing-tier-section .carousel-dot {
+    .pricing-tier-section .owl-dots {
+      text-align: center;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .pricing-tier-section .owl-dots .owl-dot {
       width: 12px;
       height: 12px;
       border-radius: 50%;
       background: rgba(var(--color-foreground), 0.2);
       border: none;
-      cursor: pointer;
+      margin: 0 6px;
       transition: all 0.3s ease;
+      cursor: pointer;
     }
 
-    .pricing-tier-section .carousel-dot.active {
+    .pricing-tier-section .owl-dots .owl-dot.active,
+    .pricing-tier-section .owl-dots .owl-dot:hover {
       background: rgb(var(--color-foreground));
       transform: scale(1.2);
+    }
+
+    .pricing-tier-section .owl-dots .owl-dot span {
+      display: none;
     }
   }
 
   @media screen and (min-width: 750px) {
-    .pricing-tier-section .carousel-indicators {
+    .pricing-tier-section .owl-dots {
       display: none;
     }
   }
@@ -280,7 +302,7 @@
       </div>
     {%- endunless -%}
 
-    <div class="pricing-tier-table" id="pricing-carousel">
+    <div class="pricing-tier-table owl-carousel owl-theme" id="pricing-carousel">
       {%- comment -%} Basic Tier {%- endcomment -%}
       <div class="pricing-tier{% if section.settings.featured_tier == 'basic' %} featured{% endif %}" data-tier="0">
         <h3 class="pricing-tier__name">{{ section.settings.basic_name }}</h3>
@@ -425,98 +447,62 @@
         {%- endunless -%}
       </div>
     </div>
-
-    {%- comment -%} Mobile Carousel Indicators {%- endcomment -%}
-    <div class="carousel-indicators">
-      <button class="carousel-dot active" data-tier="0" aria-label="View Basic Plan"></button>
-      <button class="carousel-dot" data-tier="1" aria-label="View Standard Plan"></button>
-      <button class="carousel-dot" data-tier="2" aria-label="View Premium Plan"></button>
-    </div>
   </div>
 </div>
 
+<!-- Owl Carousel JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const carousel = document.getElementById('pricing-carousel');
-    const dots = document.querySelectorAll('.carousel-dot');
-    const tiers = document.querySelectorAll('.pricing-tier');
-
-    if (!carousel || dots.length === 0) return;
-
-    let currentTier = 0;
-    const totalTiers = tiers.length;
-
-    // Update active dot
-    function updateDots() {
-      dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentTier);
-      });
-    }
-
-    // Scroll to specific tier
-    function scrollToTier(tierIndex) {
-      if (tierIndex >= 0 && tierIndex < totalTiers) {
-        const tier = tiers[tierIndex];
-        const scrollLeft = tierIndex * carousel.offsetWidth;
-
-        carousel.scrollTo({
-          left: scrollLeft,
-          behavior: 'smooth',
-        });
-
-        currentTier = tierIndex;
-        updateDots();
+    // Initialize Owl Carousel for mobile devices only
+    function initializeCarousel() {
+      if (window.innerWidth <= 749) {
+        // Initialize Owl Carousel if not already initialized
+        if (!$('#pricing-carousel').hasClass('owl-loaded')) {
+          $('#pricing-carousel').owlCarousel({
+            items: 1,
+            margin: 0,
+            nav: false,
+            dots: true,
+            loop: false,
+            autoplay: false,
+            stagePadding: 10,
+            responsive: {
+              0: {
+                items: 1,
+                margin: 0,
+                stagePadding: 10,
+              },
+              576: {
+                items: 1,
+                margin: 0,
+                stagePadding: 15,
+              },
+            },
+            onInitialized: function () {
+              // Add custom styling after initialization
+              $('.owl-dots').addClass('text-center');
+            },
+          });
+        }
+      } else {
+        // Destroy carousel for desktop view
+        if ($('#pricing-carousel').hasClass('owl-loaded')) {
+          $('#pricing-carousel').trigger('destroy.owl.carousel');
+          $('#pricing-carousel').removeClass('owl-loaded');
+        }
       }
     }
 
-    // Handle dot clicks
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        scrollToTier(index);
-      });
+    // Initialize on load
+    initializeCarousel();
+
+    // Re-initialize on window resize
+    window.addEventListener('resize', function () {
+      initializeCarousel();
     });
-
-    // Handle scroll events to update active dot
-    let scrollTimeout;
-    carousel.addEventListener('scroll', () => {
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        const scrollLeft = carousel.scrollLeft;
-        const containerWidth = carousel.offsetWidth;
-        const newTier = Math.round(scrollLeft / containerWidth);
-
-        if (newTier !== currentTier && newTier >= 0 && newTier < totalTiers) {
-          currentTier = newTier;
-          updateDots();
-        }
-      }, 100);
-    });
-
-    // Touch/swipe support
-    let startX = 0;
-    let scrollStart = 0;
-
-    carousel.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].clientX;
-      scrollStart = carousel.scrollLeft;
-    });
-
-    carousel.addEventListener('touchmove', (e) => {
-      e.preventDefault();
-      const x = e.touches[0].clientX;
-      const walk = (startX - x) * 1.5;
-      carousel.scrollLeft = scrollStart + walk;
-    });
-
-    carousel.addEventListener('touchend', () => {
-      const scrollLeft = carousel.scrollLeft;
-      const containerWidth = carousel.offsetWidth;
-      const targetTier = Math.round(scrollLeft / containerWidth);
-      scrollToTier(targetTier);
-    });
-
-    // Initialize
-    updateDots();
   });
 </script>
 
