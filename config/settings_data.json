@@ -136,6 +136,68 @@
       }
     },
     "content_for_index": [],
+    "blocks": {
+      "9664103760669878543": {
+        "type": "shopify://apps/seo-on-blog/blocks/avada-seoon-setting/a45c3e67-be9f-4255-a194-b255a24f37c9",
+        "disabled": false,
+        "settings": {}
+      },
+      "15399298802885521802": {
+        "type": "shopify://apps/table-of-contents/blocks/app-embed/d06f5754-affb-4dc7-a2a9-18d74d225f70",
+        "disabled": false,
+        "settings": {}
+      },
+      "18041579710230967637": {
+        "type": "shopify://apps/hura-showcase-builder/blocks/app-embed/28d61eeb-a555-4527-88fb-4e5063877988",
+        "disabled": false,
+        "settings": {}
+      },
+      "15683396631634586217": {
+        "type": "shopify://apps/inbox/blocks/chat/841fc607-4181-4ad1-842d-e24d7f8bad6b",
+        "disabled": false,
+        "settings": {
+          "button_color": "#000000",
+          "secondary_color": "#FFFFFF",
+          "ternary_color": "#6A6A6A",
+          "button_icon": "chat_bubble",
+          "button_text": "chat_with_us",
+          "button_horizontal_position": "bottom_right",
+          "button_vertical_position": "lowest",
+          "greeting_message": ""
+        }
+      },
+      "13941932224563198139": {
+        "type": "shopify://apps/sms-alert/blocks/sa-checkout/cd0c18de-0a25-486c-afdc-d7e6d34dfe38",
+        "disabled": false,
+        "settings": {
+          "phone_label": "Mobile Number",
+          "phone_placeholder": "Mobile Number",
+          "theme_style": "style1",
+          "form_width": "small",
+          "button_label": "Submit",
+          "colour": "#00A4FF"
+        }
+      },
+      "9509480351695843667": {
+        "type": "shopify://apps/autoschema-google-structures/blocks/google-structure-data/17b14c39-0b4b-4288-a8e8-ecd3eee4fb64",
+        "disabled": false,
+        "settings": {
+          "founder": "Jordan Russell",
+          "facebook": "https://www.facebook.com/pricedriven",
+          "instagram": "https://www.instagram.com/pricedriven/",
+          "twitter": "",
+          "about": "https://pricedriven.ca/pages/about-us",
+          "contact": "",
+          "shipping_label": "",
+          "allow_returns": true
+        }
+      },
+      "7691699742713193646": {
+        "type": "shopify://apps/sra-google-analytics-4-ga4/blocks/sliderule-analytics/9960d9af-5e49-44da-a5b8-aade858d4324",
+        "disabled": false,
+        "settings": {}
+      }
+    },
     "color_schemes": {
       "scheme-1": {
         "settings": {
