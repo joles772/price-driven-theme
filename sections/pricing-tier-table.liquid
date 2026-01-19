@@ -142,7 +142,7 @@
   .pricing-tier__feature::before {
     {% if section.settings.show_feature_icons %}
       content: "✓";
-      color: rgb(var(--color-button));
+      color: #22c55e;
       font-weight: bold;
       margin-right: 0.75rem;
       font-size: 1.1rem;
@@ -158,7 +158,7 @@
   .pricing-tier__feature.unavailable::before {
     {% if section.settings.show_feature_icons %}
       content: "✗";
-      color: rgba(var(--color-foreground), 0.5);
+      color: #ef4444;
     {% else %}
       display: none;
     {% endif %}
@@ -226,7 +226,7 @@
     }
 
     .pricing-tier.featured::before {
-      top: -12px;
+      top: -8px;
     }
 
     .pricing-tier.featured {
