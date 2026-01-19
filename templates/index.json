@@ -294,6 +294,7 @@
         },
         "collection_list_xeNE8c": {
           "type": "collection_list",
+          "name": "K-N",
           "settings": {
             "collection": [
               "kia",
@@ -308,13 +309,30 @@
             ],
             "collection_title": "K-N"
           }
+        },
+        "collection_list_8UKbbF": {
+          "type": "collection_list",
+          "name": "P-Z",
+          "settings": {
+            "collection": [
+              "polestar",
+              "porsche",
+              "ram",
+              "subaru",
+              "toyota",
+              "volkswagen",
+              "volvo"
+            ],
+            "collection_title": "P-Z"
+          }
         }
       },
       "block_order": [
         "collection_list_yFnBRB",
         "collection_list_Ubdbix",
         "collection_list_KUKCdf",
-        "collection_list_xeNE8c"
+        "collection_list_xeNE8c",
+        "collection_list_8UKbbF"
       ],
       "name": "Collection tabs",
       "settings": {
