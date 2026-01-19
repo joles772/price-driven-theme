@@ -47,6 +47,11 @@
   justify-content: right;
 }
 
+.collection-list-wrapper .section-heading h2 {
+  text-align: center;
+  font-size: calc(var(--font-heading-scale) * 4rem) !important;
+}
+
 .align-center .collection-list-title {
   text-align: center;
 }

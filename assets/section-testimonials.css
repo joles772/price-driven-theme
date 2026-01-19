@@ -8,6 +8,11 @@
     margin-bottom: 1rem;
 }
 
+.testimonials-section .title-wrapper-with-link h2 {
+    width: 100%;
+}
+
+
 .testimonials-section .subtitle-wrapper {
     text-align: center;
     margin-bottom: 3rem;
