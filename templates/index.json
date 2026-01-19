@@ -251,18 +251,45 @@
         "collection_list_yFnBRB": {
           "type": "collection_list",
           "settings": {
-            "collection": [],
-            "collection_title": "Collections"
+            "collection": [
+              "acura",
+              "alfa-romeo",
+              "audi",
+              "bmw",
+              "buick"
+            ],
+            "collection_title": "A-B"
           }
         },
         "collection_list_Ubdbix": {
           "type": "collection_list",
           "settings": {
-            "collection": [],
-            "collection_title": "Collections"
+            "collection": [
+              "cadillac",
+              "chevrolet",
+              "chrysler",
+              "dodge",
+              "fiat",
+              "ford"
+            ],
+            "collection_title": "C-F"
           }
         },
         "collection_list_KUKCdf": {
+          "type": "collection_list",
+          "settings": {
+            "collection": [
+              "genesis",
+              "gmc",
+              "honda",
+              "hyundai",
+              "jaguar",
+              "jeep"
+            ],
+            "collection_title": "G-J"
+          }
+        },
+        "collection_list_xeNE8c": {
           "type": "collection_list",
           "settings": {
             "collection": [],
@@ -273,7 +300,8 @@
       "block_order": [
         "collection_list_yFnBRB",
         "collection_list_Ubdbix",
-        "collection_list_KUKCdf"
+        "collection_list_KUKCdf",
+        "collection_list_xeNE8c"
       ],
       "name": "Collection tabs",
       "settings": {
