@@ -17,78 +17,34 @@
           "settings": {
             "collection": "",
             "image": "shopify://shop_images/home-banner_d8472472-6911-4bf1-a6d7-783518ebf4d7.jpg",
-            "image_overlay_opacity": 40,
-            "heading": "Image banner",
+            "image_overlay_opacity": 50,
+            "heading": "We Make Getting Your Next Car Easier",
             "heading_size": "h2",
-            "text": "<p>Give customers details about the banner image(s) or content on the template.</p>",
+            "text": "<p>Check out our free discount reports or let our team of professional car negotiators set up your deal so you don't have to.</p>",
             "text_size_block": "medium",
-            "button_label_1": "Button label",
+            "button_label_1": "Find Out More",
             "button_link_1": "",
             "button_style_secondary_1": false,
-            "button_label_2": "Button label",
+            "button_label_2": "",
             "button_link_2": "",
             "button_style_secondary_2": false,
-            "filter_color_scheme": "scheme-5",
-            "filter_title": "Navigation label",
+            "filter_color_scheme": "scheme-4",
+            "filter_title": "Browse Our Free Discount Reports",
             "filter_1": "Availability",
             "filter_2": "Price",
             "filter_3": "Product type",
             "filter_4": "Vendor",
             "submit_button": "Search",
-            "color_scheme": "",
-            "show_text_box": true,
+            "color_scheme": "scheme-4",
+            "show_text_box": false,
             "desktop_content_position": "middle-left",
-            "desktop_content_alignment": "center",
-            "mobile_content_alignment": "center"
-          }
-        },
-        "video_slide_9zfdjp": {
-          "type": "video_slide",
-          "settings": {
-            "image_overlay_opacity": 0,
-            "heading": "Image banner",
-            "heading_size": "h2",
-            "text": "<p>Give customers details about the banner image(s) or content on the template.</p>",
-            "text_size_block": "medium",
-            "button_label_1": "Button label",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "Button label",
-            "button_link_2": "",
-            "button_style_secondary_2": false,
-            "color_scheme": "",
-            "show_text_box": true,
-            "desktop_content_position": "middle-center",
-            "desktop_content_alignment": "center",
-            "mobile_content_alignment": "center"
-          }
-        },
-        "image_slide_dELXTN": {
-          "type": "image_slide",
-          "settings": {
-            "image_overlay_opacity": 0,
-            "heading": "Image banner",
-            "heading_size": "h2",
-            "text": "<p>Give customers details about the banner image(s) or content on the template.</p>",
-            "text_size_block": "medium",
-            "button_label_1": "Button label",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "Button label",
-            "button_link_2": "",
-            "button_style_secondary_2": false,
-            "color_scheme": "",
-            "show_text_box": true,
-            "desktop_content_position": "middle-center",
             "desktop_content_alignment": "center",
             "mobile_content_alignment": "center"
           }
         }
       },
       "block_order": [
-        "filter_slide_HgKxE4",
-        "video_slide_9zfdjp",
-        "image_slide_dELXTN"
+        "filter_slide_HgKxE4"
       ],
       "name": "Image banner filter",
       "settings": {
@@ -128,44 +84,113 @@
         "padding_bottom": 0
       }
     },
+    "testimonials_6GbYNa": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_UF76U8": {
+          "type": "testimonial",
+          "settings": {
+            "customer_name": "Lucas H",
+            "customer_title": "Kia Seltos | 2025",
+            "customer_image": "shopify://shop_images/smiling-stylish-couple-in-sunglasses-standing-near-2024-11-17-10-30-38-utc_1.jpg",
+            "star_rating": 5,
+            "testimonial_text": "Price Driven made buying my first new car so easy! The transparent pricing gave me confidence, and the pre-negotiated deal saved me hundreds.",
+            "testimonial_date": ""
+          }
+        },
+        "testimonial_XGQQRC": {
+          "type": "testimonial",
+          "settings": {
+            "customer_name": "Michael S",
+            "customer_title": "Ford Escape | 2024",
+            "customer_image": "shopify://shop_images/stylish-kuwaiti-man-2023-11-27-04-52-32-utc_1.jpg",
+            "star_rating": 5,
+            "testimonial_text": "Made purchasing a new SUV less stressful than my previous car. Knowing how much discount there is, helps with negotiating the price.",
+            "testimonial_date": ""
+          }
+        },
+        "testimonial_knWEPj": {
+          "type": "testimonial",
+          "settings": {
+            "customer_name": "Olivia P",
+            "customer_title": "Lexus RX | 2025",
+            "customer_image": "shopify://shop_images/african-american-woman-at-violet-dress-and-cap-2023-11-27-04-58-26-utc_1.jpg",
+            "star_rating": 5,
+            "testimonial_text": "I was able to save money on my Lexus RX through Price Driven. The platform provided all the necessary details to make an informed choice.",
+            "testimonial_date": ""
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_UF76U8",
+        "testimonial_XGQQRC",
+        "testimonial_knWEPj"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "title": "What Our Customers Say",
+        "subtitle": "Genuine reviews from our latest customers",
+        "heading_size": "h1",
+        "layout": "grid",
+        "columns_desktop": 3,
+        "color_scheme": "scheme-2",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "rich_text_BGGcHB": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_GitVWQ": {
+          "type": "heading",
+          "settings": {
+            "heading": "How It Works",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_GitVWQ"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 0
+      }
+    },
     "multirow_m3Tjtt": {
       "type": "multirow",
       "blocks": {
+        "row_b9iHbb": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/choose-your-car.jpg",
+            "caption": "Step 1",
+            "heading": "Choose Your Car",
+            "text": "<p>Browse our comprehensive selection of cars and find your perfect vehicle. Filter by make, model, year, and more.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
         "row_KHzhnE": {
           "type": "row",
           "settings": {
-            "caption": "Caption",
-            "heading": "Row",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "button_label": "Button label",
-            "button_link": ""
-          }
-        },
-        "row_q8rbN8": {
-          "type": "row",
-          "settings": {
-            "caption": "Caption",
-            "heading": "Row",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "button_label": "Button label",
-            "button_link": ""
-          }
-        },
-        "row_awWEeR": {
-          "type": "row",
-          "settings": {
-            "caption": "Caption",
-            "heading": "Row",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "button_label": "Button label",
+            "image": "shopify://shop_images/home-download-your-report.jpg",
+            "caption": "Step 2",
+            "heading": "Download a Free Discount Report or Go Premium",
+            "text": "<p>Download a free discount report to see the dealer price of your car, including promotions and incentives. Use your report to negotiate with confidence.</p><p>Or</p><p>Go with our Premium Vehicle Negotiating Service. Our experts negotiate and prepare your car deal. All you have to do is go in and sign at the dealership.</p>",
+            "button_label": "",
             "button_link": ""
           }
         }
       },
       "block_order": [
-        "row_KHzhnE",
-        "row_q8rbN8",
-        "row_awWEeR"
+        "row_b9iHbb",
+        "row_KHzhnE"
       ],
       "name": "t:sections.multirow.presets.name",
       "settings": {
@@ -183,11 +208,229 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "pricing_tier_table_HU7ANj": {
+      "type": "pricing-tier-table",
+      "name": "Pricing Tier Table",
+      "settings": {
+        "title": "See the Difference",
+        "subtitle": "Find out what Price Driven brings to the table",
+        "heading_size": "h1",
+        "color_scheme": "scheme-2",
+        "currency_symbol": "",
+        "price_period": "",
+        "featured_tier": "premium",
+        "popular_badge_text": "Most Popular",
+        "show_feature_icons": true,
+        "basic_name": "Without Price Driven",
+        "basic_price": "",
+        "basic_description": "Negotiate without knowing all the details",
+        "basic_features": "",
+        "basic_disabled_features": "Limited or unclear discount data\n4+ hours average time commitment\nHigh stress\nNegotiate alone\nNo guaranteed savings",
+        "basic_button_text": "",
+        "basic_button_link": "",
+        "standard_name": "With Free Price Driven Discount Reports",
+        "standard_price": "",
+        "standard_description": "Use your free discount report to negotiate with confidence",
+        "standard_features": "See the dealer discount\n1 hour average time commitment\nLow stress\nNegotiate with confidence",
+        "standard_disabled_features": "No guaranteed savings",
+        "standard_button_text": "Browse Reports",
+        "standard_button_link": "",
+        "premium_name": "With Premium Price Driven Car Negotiating Service",
+        "premium_price": "",
+        "premium_description": "Let our team of professional car negotiators set up your car deal for you",
+        "premium_features": "See the dealer discount\n10 minute average time commitment\nNo stress\nWe negotiate for you\nGuaranteed best price",
+        "premium_disabled_features": "None",
+        "premium_button_text": "Go Premium",
+        "premium_button_link": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collection_tabs_3QGcfP": {
+      "type": "collection-tabs",
+      "blocks": {
+        "collection_list_yFnBRB": {
+          "type": "collection_list",
+          "name": "A-B",
+          "settings": {
+            "collection": [
+              "acura",
+              "alfa-romeo",
+              "audi",
+              "bmw",
+              "buick"
+            ],
+            "collection_title": "A-B"
+          }
+        },
+        "collection_list_Ubdbix": {
+          "type": "collection_list",
+          "name": "C-F",
+          "settings": {
+            "collection": [
+              "cadillac",
+              "chevrolet",
+              "chrysler",
+              "dodge",
+              "fiat",
+              "ford"
+            ],
+            "collection_title": "C-F"
+          }
+        },
+        "collection_list_KUKCdf": {
+          "type": "collection_list",
+          "name": "G-J",
+          "settings": {
+            "collection": [
+              "genesis",
+              "gmc",
+              "honda",
+              "hyundai",
+              "jaguar",
+              "jeep"
+            ],
+            "collection_title": "G-J"
+          }
+        },
+        "collection_list_xeNE8c": {
+          "type": "collection_list",
+          "name": "K-N",
+          "settings": {
+            "collection": [
+              "kia",
+              "land-rover",
+              "lexus",
+              "lincoln",
+              "mazda",
+              "mercedes-benz",
+              "mini",
+              "mitsubishi",
+              "nissan"
+            ],
+            "collection_title": "K-N"
+          }
+        },
+        "collection_list_8UKbbF": {
+          "type": "collection_list",
+          "name": "P-Z",
+          "settings": {
+            "collection": [
+              "polestar",
+              "porsche",
+              "ram",
+              "subaru",
+              "toyota",
+              "volkswagen",
+              "volvo"
+            ],
+            "collection_title": "P-Z"
+          }
+        }
+      },
+      "block_order": [
+        "collection_list_yFnBRB",
+        "collection_list_Ubdbix",
+        "collection_list_KUKCdf",
+        "collection_list_xeNE8c",
+        "collection_list_8UKbbF"
+      ],
+      "name": "Collection tabs",
+      "settings": {
+        "title": "Discount Reports by Make",
+        "heading_alignment": "center",
+        "heading_size": "h2",
+        "description": "",
+        "text_size_block": "medium",
+        "tabs_font_size": "h6",
+        "tabs_font_weight": "fw-500",
+        "card_heading_size": "h4",
+        "image_ratio": "square",
+        "image_overlay_opacity": 0,
+        "reverse_card": false,
+        "product_image_ratio": "adapt",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "products_to_show": 8,
+        "color_scheme": "",
+        "columns_desktop": 3,
+        "columns_mobile": "1",
+        "padding_top": 70,
+        "padding_bottom": 70
+      }
+    },
+    "email_signup_banner_iQnFb8": {
+      "type": "email-signup-banner",
+      "blocks": {
+        "heading_TYCUnc": {
+          "type": "heading",
+          "settings": {
+            "heading": "Never Miss an Update",
+            "heading_size": "h1"
+          }
+        },
+        "paragraph_BeDKp6": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Always be in the loop about the latest car deals</p>",
+            "text_style": "body"
+          }
+        },
+        "email_form_nPzhLr": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading_TYCUnc",
+        "paragraph_BeDKp6",
+        "email_form_nPzhLr"
+      ],
+      "name": "t:sections.email-signup-banner.presets.name",
+      "settings": {
+        "show_background_image": true,
+        "image": "shopify://shop_images/Lexus_IS.avif",
+        "image_overlay_opacity": 60,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-3",
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
+    },
+    "featured_blog_j3pmtq": {
+      "type": "featured-blog",
+      "name": "t:sections.featured-blog.presets.name",
+      "settings": {
+        "blog": "blog",
+        "post_limit": 3,
+        "heading": "Blog posts",
+        "heading_size": "h1",
+        "columns_desktop": 3,
+        "show_view_all": true,
+        "show_image": true,
+        "show_date": true,
+        "show_author": false,
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
     "image_banner_categories_TVtWiD",
     "rich_text",
-    "multirow_m3Tjtt"
+    "testimonials_6GbYNa",
+    "rich_text_BGGcHB",
+    "multirow_m3Tjtt",
+    "pricing_tier_table_HU7ANj",
+    "collection_tabs_3QGcfP",
+    "email_signup_banner_iQnFb8",
+    "featured_blog_j3pmtq"
   ]
 }

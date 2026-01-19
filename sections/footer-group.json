@@ -14,6 +14,14 @@
     "footer": {
       "type": "footer",
       "blocks": {
+        "image_RHddg4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/price-driven-logo-v2_69afd96b-0f61-442c-b241-22c517966570.png",
+            "image_width": 330,
+            "alignment": "center"
+          }
+        },
         "footer-0": {
           "type": "link_list",
           "settings": {
@@ -24,22 +32,23 @@
         "footer-1": {
           "type": "link_list",
           "settings": {
-            "heading": "Info",
-            "menu": "footer"
+            "heading": "Legal",
+            "menu": "policies"
           }
         },
-        "footer-2": {
+        "text_Cb8Agg": {
           "type": "text",
           "settings": {
-            "heading": "Our mission",
-            "subtext": "<p>Share contact information, store details, and brand content with your customers.</p>"
+            "heading": "Our Mission",
+            "subtext": ""
           }
         }
       },
       "block_order": [
+        "image_RHddg4",
         "footer-0",
         "footer-1",
-        "footer-2"
+        "text_Cb8Agg"
       ],
       "settings": {
         "color_scheme": "scheme-4",
