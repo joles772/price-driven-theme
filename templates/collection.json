@@ -12,9 +12,27 @@
     "banner": {
       "type": "main-collection-banner",
       "settings": {
+        "color_scheme": "scheme-3",
+        "text_secondary_color": false,
+        "show_collection_breadcrumbs": true,
+        "show_breadcrumbs_top": false,
+        "heading_size": "h1",
         "show_collection_description": false,
+        "description_text": "",
+        "text_size_block": "medium",
+        "heading_alignment": "center",
         "show_collection_image": true,
-        "color_scheme": "scheme-1"
+        "default_image": "shopify://shop_images/Black_Red_3D_Car_Intro_Video_1.gif",
+        "banner_height": "default",
+        "image_block": false,
+        "hide_radius": false,
+        "image_size": "60",
+        "image_overlay_opacity": 70,
+        "content_alignment": "center",
+        "section_full_width": true,
+        "section_background": "#ffffff",
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
     "product-grid": {
