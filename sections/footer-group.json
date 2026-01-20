@@ -22,6 +22,13 @@
             "alignment": "center"
           }
         },
+        "link_list_9qki6Y": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Tools",
+            "menu": "tools"
+          }
+        },
         "footer-0": {
           "type": "link_list",
           "settings": {
@@ -39,6 +46,7 @@
       },
       "block_order": [
         "image_RHddg4",
+        "link_list_9qki6Y",
         "footer-0",
         "footer-1"
       ],
